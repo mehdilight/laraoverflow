@@ -9,6 +9,6 @@ class QuestionsTaggedController extends Controller
 {
     public function index(Tag $tag)
     {
-
+        return view('pages.questions.tagged.index');
     }
 }
