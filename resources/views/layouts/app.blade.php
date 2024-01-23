@@ -7,9 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title> @yield('title')</title>
   @vite('resources/css/app.css')
+    <x-rich-text-trix-styles />
+
 </head>
 
-<body class="antialiased text-gray-950">
+<body class="antialiased text-gray-950 bg-gray-50">
 @include('layouts.header')
 <div class="main-container mx-auto flex">
   @include('layouts.sidebar')
@@ -18,6 +20,8 @@
   </div>
 </div>
 @vite(['resources/js/app.js'])
+
+@stack('scripts')
 </body>
 
 </html>

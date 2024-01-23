@@ -53,7 +53,7 @@ Route::prefix('questions')
             ->name('index');
         Route::post('/', [QuestionsController::class, 'store'])
             ->name('store');
-        Route::get('/create', [QuestionsController::class, 'create'])
+        Route::get('/ask', [QuestionsController::class, 'create'])
             ->name('create');
 
         Route::get('/tagged/{tag}', [QuestionsTaggedController::class, 'index'])
