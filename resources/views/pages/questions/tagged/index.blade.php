@@ -3,5 +3,4 @@
 @section('title', 'Tags - Laraoverflow')
 
 @section('content')
-
 @endsection
