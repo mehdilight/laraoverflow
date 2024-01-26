@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '')
+@section('title', 'Ask a public question - Laraoverflow')
 
 @section('content')
   <section>

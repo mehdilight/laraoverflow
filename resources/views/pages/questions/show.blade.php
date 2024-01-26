@@ -8,7 +8,7 @@
 
 @extends('layouts.app')
 
-@section('title', '')
+@section('title', $question->title)
 
 @section('content')
   <header class="space-y-4 px-4 py-4">

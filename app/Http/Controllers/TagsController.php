@@ -25,6 +25,8 @@ class TagsController extends Controller
                 ]);
         }
 
-        return view('pages.tags.index');
+        return view('pages.tags.index', [
+            'tags' => Tag::query()->paginate()
+        ]);
     }
 }
