@@ -47,3 +47,12 @@
 .trix-content img {
     margin: 0 auto;
 }
+
+.trix-content div {
+    @apply mb-2;
+}
+
+.trix-content pre {
+    @apply mb-2 overflow-x-scroll;
+    white-space: break-spaces !important;
+}

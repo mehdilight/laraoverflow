@@ -33,15 +33,8 @@
     </div>
   </header>
   <section>
-    <x-question.card />
-    <x-question.card />
-    <x-question.card />
-    <x-question.card />
-    <x-question.card />
-    <x-question.card />
-    <x-question.card />
-    <x-question.card />
-    <x-question.card />
-    <x-question.card />
+    @foreach($questions as $question)
+      <x-question.card :question="$question"/>
+    @endforeach
   </section>
 @endsection

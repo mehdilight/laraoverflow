@@ -6,7 +6,7 @@
 
 @layer components {
     .btn {
-        @apply text-sm px-6 py-2 rounded focus:outline-none focus:ring;
+        @apply text-sm px-6 py-2 rounded focus:outline-none focus:ring whitespace-nowrap;
     }
 
     .btn-primary {

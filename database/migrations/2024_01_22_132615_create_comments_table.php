@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->longText('body');
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
-            $table->foreignId('answer_id')->constrained()->restrictOnDelete();
+            $table->morphs('commentable');
             $table->timestamps();
         });
     }

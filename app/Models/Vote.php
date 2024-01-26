@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Comment extends Model
+class Vote extends Model
 {
     use HasFactory;
+
+    public const UPVOTE_TYPE = 1;
+    public const DOWN_UPVOTE_TYPE = -1;
 
     protected $guarded = [];
 
@@ -18,7 +21,7 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function commentable(): MorphTo
+    public function votable(): MorphTo
     {
         return $this->morphTo();
     }
