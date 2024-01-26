@@ -45,7 +45,7 @@
         <form action="{{ route('questions.upvote', [$question, $question->slug ]) }}" method="post">
           @csrf
           <button
-            class="flex items-center justify-center w-10 h-10 border border-solid border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-orange-200 hover:outline-none hover:ring hover:ring-orange-200 @if ($question?->userVote?->value === Vote::UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-orange-400 text-white @endif"
+            class="flex items-center justify-center w-10 h-10 border border-solid border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-orange-200 hover:outline-none hover:ring hover:ring-orange-200 @if($question?->userVote?->value === Vote::UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-orange-400 text-white @endif"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
               <path fill-rule="evenodd"
@@ -60,7 +60,7 @@
         <form action="{{ route('questions.downvote', [$question, $question->slug ]) }}" method="post">
           @csrf
           <button
-            class="flex items-center justify-center w-10 h-10 border border-solid border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-orange-200 hover:outline-none hover:ring hover:ring-orange-200 @if ($question?->userVote?->value === Vote::DOWN_UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-orange-400 text-white @endif">
+            class="flex items-center justify-center w-10 h-10 border border-solid border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-orange-200 hover:outline-none hover:ring hover:ring-orange-200 @if($question?->userVote?->value === Vote::DOWN_UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-orange-400 text-white @endif">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
               <path fill-rule="evenodd"
                     d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
@@ -132,11 +132,11 @@
         @foreach($question->answers as $answer)
           <div class="flex space-x-4">
             <div class="space-y-2">
-              <form action="{{ route('questions.answers.upvote.store', [$question, $question->slug, $answer ]) }}"
+              <form action="{{ route('questions.answers.upvote.store', [$question, $answer ]) }}"
                     method="post">
                 @csrf
                 <button
-                  class="flex items-center justify-center w-10 h-10 border border-solid border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-orange-200 hover:outline-none hover:ring hover:ring-orange-200">
+                  class="flex items-center justify-center w-10 h-10 border border-solid border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-orange-200 hover:outline-none hover:ring hover:ring-orange-200 @if($answer?->userVote?->value === Vote::UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-orange-400 text-white @endif">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd"
                           d="M9.47 6.47a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 1 1-1.06 1.06L10 8.06l-3.72 3.72a.75.75 0 0 1-1.06-1.06l4.25-4.25Z"
@@ -144,11 +144,14 @@
                   </svg>
                 </button>
               </form>
-              <form action="{{ route('questions.answers.downvote.store', [$question, $question->slug, $answer ]) }}"
+              <div class="text-black-500 text-center text-xl">
+                {{ $answer->votes_score }}
+              </div>
+              <form action="{{ route('questions.answers.downvote.store', [$question, $answer ]) }}"
                     method="post">
                 @csrf
                 <button
-                  class="flex items-center justify-center w-10 h-10 border border-solid border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-orange-200 hover:outline-none hover:ring hover:ring-orange-200">
+                  class="flex items-center justify-center w-10 h-10 border border-solid border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-orange-200 hover:outline-none hover:ring hover:ring-orange-200 @if($answer?->userVote?->value === Vote::DOWN_UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-orange-400 text-white @endif">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd"
                           d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
