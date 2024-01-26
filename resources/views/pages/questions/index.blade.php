@@ -14,7 +14,7 @@
     </div>
     <div class="flex justify-between items-center">
       <p class="text-sm">
-        24,048,072 questions
+        {{ $questions->total() }} {{ $questions->total() == 1 ? 'question' : 'questions' }}
       </p>
       <div class="inline-flex rounded" role="group">
         <a href="#"

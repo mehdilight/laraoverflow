@@ -15,7 +15,8 @@ class QuestionsController extends Controller
     public function index()
     {
         $questions = Question::query()
-            ->with('tags', 'user', 'comments')
+            ->with('tags', 'user')
+            ->withCount('answers')
             ->paginate();
 
         return view('pages.questions.index', [

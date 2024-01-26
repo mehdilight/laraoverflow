@@ -7,17 +7,18 @@
 <section class="border-t border-solid border-gray-300 pl-8 py-4 pr-4 flex flex-start space-x-4">
   <div class="flex-shrink-0 flex flex-col text-xs text-black-500 text-right">
     <span>
-      0 votes
+      {{ $question->votes_score }} votes
     </span>
     <span>
-      0 answers
+      {{ $question->answers_count }} @if($question->answers_count === 1) answer @else answers @endif
     </span>
     <span>
       0 views
     </span>
   </div>
   <div class="flex-grow">
-    <a class="text-blue-500 hover:text-blue-600 text mb-2 block font-medium" href="{{ route('questions.show', ['question' => $question->id, 'slug' =>$question->slug ]) }}">
+    <a class="text-blue-500 hover:text-blue-600 text mb-2 block font-medium"
+       href="{{ route('questions.show', ['question' => $question->id, 'slug' =>$question->slug ]) }}">
       <h2>
         {{ $question->title }}
       </h2>
@@ -29,7 +30,7 @@
     <div class="flex flex-wrap justify-between items-center gap-y-1">
       <div class="flex space-x-2">
         @foreach($question->tags as $tag)
-          <x-tag.badge :tag="$tag" />
+          <x-tag.badge :tag="$tag"/>
         @endforeach
       </div>
       <div class="ml-auto">
@@ -38,7 +39,7 @@
             {{ \Illuminate\Support\Str::upper(substr($question->user->username, 0, 1)) }}
           </span>
           <span class="text-blue-500 text-xs hover:text-blue-600 focus:text-blue-600">
-              {{ $question->user->username }}
+            {{ $question->user->username }}
           </span>
         </a>
       </div>
