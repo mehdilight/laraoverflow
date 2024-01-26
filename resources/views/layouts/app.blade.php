@@ -5,10 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title> @yield('title')</title>
+  <title>@yield('title')</title>
   @vite('resources/css/app.css')
-    <x-rich-text-trix-styles />
-
+  <x-rich-text-trix-styles/>
+  @stack('header_scripts')
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script>
+    document.addEventListener('alpine:init', async () => {
+      Alpine.magic('fetch', () => {
+        return async (url, method = 'GET') => {
+          let response = await fetch(url, {
+            method: method,
+            headers: {
+              "Accept": "application/json",
+            }
+          });
+          return await response.json();
+        }
+      })
+    })
+  </script>
 </head>
 
 <body class="antialiased text-gray-950 bg-gray-50">

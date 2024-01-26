@@ -13,14 +13,15 @@
           <form class="space-y-4 md:space-y-6" action="{{ route('questions.store') }}" method="post">
             @csrf
             <div>
-              <label for="password" class="block mb-2 text-sm font-medium text-gray-900">
+              <label for="title" class="block mb-2 text-sm font-medium text-gray-900">
                 Title
               </label>
               <input
                 type="text"
                 name="title"
-                id="password"
+                id="title"
                 class="text-sm border-solid border-gray-300 rounded focus:outline-none focus:ring focus:ring-orange-200 focus:border-gray-300 w-full"
+                value="{{ old('title') }}"
                 required
               >
             </div>
@@ -28,10 +29,19 @@
               <label for="body" class="block mb-2 text-sm font-medium text-gray-900">
                 Body
               </label>
-              <x-trix-field id="body" name="body" class="text-sm focus:ring focus:ring-orange-200 focus:border-gray-300" />
-
+              <x-trix-field value="{!! old('body') !!}" id="body" name="body" class="text-sm focus:ring focus:ring-orange-200 focus:border-gray-300" />
             </div>
-
+            <div>
+              <label for="tags" class="block mb-2 text-sm font-medium text-gray-900">
+                tags
+              </label>
+             <x-tags-select/>
+            </div>
+            <div class="flex justify-end">
+              <button type="submit" class="btn btn-secondary">
+                Post my question
+              </button>
+            </div>
           </form>
         </div>
       </div>
