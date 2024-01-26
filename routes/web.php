@@ -89,3 +89,11 @@ Route::prefix('questions')
             ->middleware('auth')
             ->name('downvote');
     });
+
+Route::prefix('users')
+    ->as('users.')
+    ->group(function () {
+        Route::get('/', function () {
+            return view('pages.users.index');
+        })->name('index');
+    });
