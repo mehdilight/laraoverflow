@@ -1,6 +1,7 @@
 @php
 /**
  * @var \App\Models\Filter\Filters $filters
+ * @var \Illuminate\Pagination\LengthAwarePaginator $questions
  */
 @endphp
 @extends('layouts.app')
@@ -44,5 +45,8 @@
     @foreach($questions as $question)
       <x-question.card :question="$question"/>
     @endforeach
+    <div class="p-4">
+      {{ $questions->withQueryString()->links('components.pagination.tailwind') }}
+    </div>
   </section>
 @endsection
