@@ -30,10 +30,13 @@
                 type="email"
                 name="email"
                 id="email"
-                class="text-sm border-solid border-gray-300 rounded focus:outline-none focus:ring focus:ring-orange-200 focus:border-gray-300 w-full"
-                placeholder="name@company.com"
-                required
+                class="input @error('email') input-has-error @enderror"
               >
+              @error('email')
+              <p class="text-red-500 text-xs mt-1">
+                {{ $message }}
+              </p>
+              @enderror
             </div>
             <div>
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
@@ -41,9 +44,7 @@
                 type="password"
                 name="password"
                 id="password"
-                placeholder="••••••••"
-                class="text-sm border-solid border-gray-300 rounded focus:outline-none focus:ring focus:ring-orange-200 focus:border-gray-300 w-full"
-                required
+                class="input @error('password') input-has-error @enderror"
               >
             </div>
             <div class="flex items-center justify-between">

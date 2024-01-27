@@ -3,14 +3,14 @@
 use App\Http\Controllers\AnswerCommentsController;
 use App\Http\Controllers\AnswerDownvotesController;
 use App\Http\Controllers\AnswerUpvotesController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\QuestionAnswersController;
 use App\Http\Controllers\QuestionCommentsController;
 use App\Http\Controllers\QuestionDownvotesController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\QuestionsTaggedController;
 use App\Http\Controllers\QuestionUpvotesController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
