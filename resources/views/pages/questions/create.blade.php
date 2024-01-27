@@ -20,22 +20,37 @@
                 type="text"
                 name="title"
                 id="title"
-                class="text-sm border-solid border-gray-300 rounded focus:outline-none focus:ring focus:ring-orange-200 focus:border-gray-300 w-full"
+                class="input @error('title') input-has-error @enderror"
                 value="{{ old('title') }}"
-                required
               >
+              @error('title')
+              <p class="text-red-500 text-xs mt-1">
+                {{ $message }}
+              </p>
+              @enderror
             </div>
             <div>
               <label for="body" class="block mb-2 text-sm font-medium text-gray-900">
                 Body
               </label>
-              <x-trix-field value="{!! old('body') !!}" id="body" name="body" class="text-sm focus:ring focus:ring-orange-200 focus:border-gray-300" />
+              <x-trix-field value="{!! old('body') !!}" id="body" name="body"
+                            class="input {{ $errors->first('body') ? 'input-has-error' : '' }}"/>
+              @error('body')
+              <p class="text-red-500 text-xs mt-1">
+                {{ $message }}
+              </p>
+              @enderror
             </div>
             <div>
               <label for="tags" class="block mb-2 text-sm font-medium text-gray-900">
                 tags
               </label>
-             <x-tags-select/>
+              <x-tags-select/>
+              @error('tags')
+              <p class="text-red-500 text-xs mt-1">
+                {{ $message }}
+              </p>
+              @enderror
             </div>
             <div class="flex justify-end">
               <button type="submit" class="btn btn-secondary">

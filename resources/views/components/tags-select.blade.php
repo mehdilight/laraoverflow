@@ -56,7 +56,7 @@
       @keyup.up="if(selectedOptionIndex - 1 === 0) {return} selectedOptionIndex = selectedOptionIndex - 1"
       @keyup.left.prevent.stop="if(selectedOptionIndex + 1 > 3) {return} selectedOptionIndex = selectedOptionIndex + 1"
       @keyup.right.prevent.stop="if(selectedOptionIndex - 1 === 0) {return} selectedOptionIndex = selectedOptionIndex - 1"
-      @keyup.enter="selectByCurrentIndex"
+      @keydown.enter.prevent="selectByCurrentIndex"
     >
   </div>
   <div

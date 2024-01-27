@@ -10,5 +10,5 @@
 <trix-editor
     id="{{ $id }}"
     input="{{ $id }}_input"
-    {{ $attributes->merge(['class' => 'trix-content border-gray-300']) }}
+    {{ $attributes->merge(['class' => 'trix-content']) }}
 ></trix-editor>
