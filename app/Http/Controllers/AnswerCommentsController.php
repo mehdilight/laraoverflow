@@ -15,12 +15,28 @@ class AnswerCommentsController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $answer->comments()->create(
+        $request->validate([
+            'body' => ['required', 'max:255']
+        ]);
+
+        $comment = $answer->comments()->create(
             [
                 'user_id' => $user->id,
-                'body'    => $request->get('answer_comment_body')
+                'body'    => $request->get('body')
             ]
         );
+
+        if ($request->expectsJson()) {
+            return response()
+                ->json(
+                    [
+                        'created' => true,
+                        'data'    => [
+                            'comment' => $comment
+                        ]
+                    ]
+                );
+        }
 
         return redirect()
             ->back();

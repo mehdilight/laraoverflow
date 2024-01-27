@@ -14,12 +14,28 @@ class QuestionCommentsController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $question->comments()->create(
+        $request->validate([
+            'body' => ['required', 'max:255']
+        ]);
+
+        $comment = $question->comments()->create(
             [
                 'user_id' => $user->id,
                 'body'    => $request->get('body')
             ]
         );
+
+        if ($request->expectsJson()) {
+            return response()
+                ->json(
+                    [
+                        'created' => true,
+                        'data'    => [
+                            'comment' => $comment
+                        ]
+                    ]
+                );
+        }
 
         return redirect()
             ->back();

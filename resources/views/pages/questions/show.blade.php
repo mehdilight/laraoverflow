@@ -102,21 +102,51 @@
             <x-common.comment :comment="$comment"/>
           @endforeach
         </div>
-        <div class="py-4" x-data="{isCommentBlockOpen: false}">
+        <div
+          class="py-4"
+          x-data="{
+            isCommentBlockOpen: false,
+            body: '',
+            errorMessage: null,
+            async handleCommentCreation() {
+              let response = await this.$fetch('{{ route('questions.comments.store', [$question]) }}', 'post', {
+                body: this.body
+              });
+              if (response.statusCode === 422) {
+                this.errorMessage =  response.json.message;
+
+                return;
+              }
+              window.location.reload();
+            }
+          }"
+        >
           <button
             class="text-black-500 hover:text-blue-400 text-sm mb-4"
             @click="isCommentBlockOpen = true; setTimeout(()=> $refs.commentBlock.focus(), 100)"
           >
             Add a comment
           </button>
-          <form x-show="isCommentBlockOpen" class="flex items-start gap-2" style="display: none" method="post"
-                action="{{ route('questions.comments.store', [$question]) }}">
+          <form
+            @submit.prevent="handleCommentCreation"
+            x-show="isCommentBlockOpen"
+            class="flex items-start gap-2"
+            style="display: none">
             @csrf
-            <textarea
-              x-ref="commentBlock"
-              name="body"
-              class="resize-none flex-grow text-sm border-solid border-gray-300 rounded focus:outline-none focus:ring focus:ring-orange-200 focus:border-gray-300 w-full"
-            ></textarea>
+            <div class="flex-grow">
+              <textarea
+                x-ref="commentBlock"
+                name="answer_comment_body"
+                class="resize-none input"
+                :class="{'input-has-error' : errorMessage}"
+                x-model="body"
+              ></textarea>
+              <p
+                x-show="errorMessage"
+                x-text="errorMessage"
+                class="text-red-500 text-xs mt-1">
+              </p>
+            </div>
             <button class="btn btn-primary text-sm">
               Add comment
             </button>
@@ -188,21 +218,51 @@
                   <x-common.comment :comment="$comment"/>
                 @endforeach
               </div>
-              <div class="py-4" x-data="{isCommentBlockOpen: false}">
+              <div
+                class="py-4"
+                x-data="{
+                  isCommentBlockOpen: false,
+                  body: '',
+                  errorMessage: null,
+                  async handleCommentCreation() {
+                    let response = await this.$fetch('{{ route('questions.answers.comments.store', [$question, $answer]) }}', 'post', {
+                      body: this.body
+                    });
+                    if (response.statusCode === 422) {
+                      this.errorMessage =  response.json.message;
+
+                      return;
+                    }
+                    window.location.reload();
+                  }
+                }"
+              >
                 <button
                   class="text-black-500 hover:text-blue-400 text-sm mb-4"
                   @click="isCommentBlockOpen = true; setTimeout(()=> $refs.commentBlock.focus(), 100)"
                 >
                   Add a comment
                 </button>
-                <form x-show="isCommentBlockOpen" class="flex items-start gap-2" style="display: none" method="post"
-                      action="{{ route('questions.answers.comments.store', [$question, $answer]) }}">
-                  @csrf
-                  <textarea
-                    x-ref="commentBlock"
-                    name="answer_comment_body"
-                    class="resize-none flex-grow text-sm border-solid border-gray-300 rounded focus:outline-none focus:ring focus:ring-orange-200 focus:border-gray-300 w-full"
-                  ></textarea>
+                <form
+                  @submit.prevent="handleCommentCreation"
+                  x-show="isCommentBlockOpen"
+                  class="flex items-start gap-2"
+                  style="display: none" method="post"
+                >
+                  <div class="flex-grow">
+                    <textarea
+                      x-ref="commentBlock"
+                      name="answer_comment_body"
+                      class="resize-none input"
+                      :class="{'input-has-error' : errorMessage}"
+                      x-model="body"
+                    ></textarea>
+                    <p
+                      x-show="errorMessage"
+                      x-text="errorMessage"
+                      class="text-red-500 text-xs mt-1">
+                    </p>
+                  </div>
                   <button class="btn btn-primary text-sm">
                     Add comment
                   </button>
@@ -224,7 +284,7 @@
           Your Answer
         </label>
         <x-trix-field value="{!! old('answer_body') !!}" id="answer_body" name="answer_body"
-                      class="text-sm focus:ring focus:ring-orange-200 focus:border-gray-300 mb-2"/>
+                      class="input bg-white mb-2"/>
         <button type="submit" class="btn btn-primary">
           Post your answer
         </button>
