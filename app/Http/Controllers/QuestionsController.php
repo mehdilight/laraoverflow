@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Filter\Filter;
+use App\Models\Filter\Filters;
 use App\Models\Question;
 use App\Models\Tag;
 use App\Models\User;
@@ -12,15 +14,19 @@ use Illuminate\Support\Str;
 
 class QuestionsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $questions = Question::query()
+        $filters = Filters::createFromRequest($request);
+        $this->setDefaultSort($filters);
+
+        $questions = Question::filter($filters)
             ->with('tags', 'user')
             ->withCount('answers')
             ->paginate();
 
         return view('pages.questions.index', [
-            'questions' => $questions
+            'questions' => $questions,
+            'filters'   => $filters
         ]);
     }
 
@@ -66,7 +72,7 @@ class QuestionsController extends Controller
             ]);
         }
 
-        $question->loadMissing(['tags','answers.comments.user', 'comments.user']);
+        $question->loadMissing(['tags', 'answers.comments.user', 'comments.user']);
 
         return view('pages.questions.show', [
             'question' => $question
@@ -86,5 +92,20 @@ class QuestionsController extends Controller
     public function destroy(Question $question)
     {
         //
+    }
+
+    /**
+     * By default the user will see the questions that have most votes score
+     *
+     * @param Filters $filters
+     */
+    private function setDefaultSort(Filters $filters)
+    {
+        $sortFilter = $filters->findByName('sort');
+        if ($sortFilter instanceof Filter) {
+            return;
+        }
+
+        $filters->getFilters()->push(new Filter('sort', 'most_votes'));
     }
 }
