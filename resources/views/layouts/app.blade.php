@@ -12,15 +12,25 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script>
     document.addEventListener('alpine:init', async () => {
+      class AlpineResponse {
+        constructor(statusCode, json) {
+          this.statusCode = statusCode;
+          this.json = json;
+        }
+      }
       Alpine.magic('fetch', () => {
-        return async (url, method = 'GET') => {
+        return async (url, method = 'GET', body) => {
           let response = await fetch(url, {
             method: method,
             headers: {
-              "Accept": "application/json",
-            }
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify(body)
           });
-          return await response.json();
+
+          return new AlpineResponse(response.status, await response.json());
         }
       })
     })
