@@ -10,10 +10,7 @@ class Filter implements Arrayable
     private const VALUE_ATTRIBUTE = 'value';
     private const FIELD_ATTRIBUTE = 'field';
 
-    private string $field;
-    private mixed $value;
-
-    public function __construct(string $field, mixed $value = null)
+    public function __construct(private string $field, private mixed $value)
     {
         $this->field = $field;
         $this->value = $value;

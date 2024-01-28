@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Filter\Filters;
 use App\Models\QueryMutators\QueryMutator;
 use App\Models\QueryMutators\Question\SortingMutator;
+use App\Models\QueryMutators\Question\TagsMutator;
 use App\Models\Traits\Commentable;
 use App\Models\Traits\Votable;
 use Illuminate\Database\Eloquent\Builder;
@@ -48,6 +49,7 @@ class Question extends Model
         )->through(
             [
                 SortingMutator::class,
+                TagsMutator::class
             ]
         )->thenReturn();
     }
