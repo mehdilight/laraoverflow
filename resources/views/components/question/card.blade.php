@@ -24,8 +24,7 @@
       </h2>
     </a>
     <div class="text-black-500 text-xs mb-2">
-      <!-- TODO: render it in a good way. without html tags -->
-      {{ \Illuminate\Support\Str::limit($question->body) }}
+      {{ $question->summary()}}
     </div>
     <div class="flex flex-wrap justify-between items-center gap-y-1">
       <div class="flex space-x-2">

@@ -8,6 +8,7 @@ use App\Models\QueryMutators\Question\SortingMutator;
 use App\Models\QueryMutators\Question\TagsMutator;
 use App\Models\Traits\Commentable;
 use App\Models\Traits\Votable;
+use DOMDocument;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Str;
 
 class Question extends Model
 {
@@ -52,5 +54,14 @@ class Question extends Model
                 TagsMutator::class
             ]
         )->thenReturn();
+    }
+
+    public function summary(): string
+    {
+        $body = $this->getAttribute('body');
+        $dom = new DOMDocument();
+        $dom->loadHTML($body);
+
+        return Str::limit($dom->textContent, 150);
     }
 }
