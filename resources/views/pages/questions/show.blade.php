@@ -69,7 +69,7 @@
           </button>
         </form>
       </div>
-      <div>
+      <div class="flex-grow">
         <div class="trix-content">
           {!! $question->body !!}
         </div>
