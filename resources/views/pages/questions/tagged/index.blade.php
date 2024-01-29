@@ -27,15 +27,15 @@
 
       <div class="inline-flex rounded" role="group">
         <a href="{{ $filters->generateFilterLink('sort', 'most_votes') }}"
-           class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-2 focus:ring-orange-700 focus:text-orange-700 {{ $sortFilter?->getValue() === 'most_votes' ? '!bg-orange-200 !text-orange-600' : '' }}">
+           class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s hover:bg-gray-100 hover:bg-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-700 focus:bg-gray-700 {{ $sortFilter?->getValue() === 'most_votes' ? '!bg-gray-200 !bg-gray-600' : '' }}">
           Most votes
         </a>
         <a href="{{ $filters->generateFilterLink('sort', 'newest') }}"
-           class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-2 focus:ring-orange-700 focus:text-orange-700 {{ $sortFilter?->getValue() === 'newest' ? '!bg-orange-200 !text-orange-600' : '' }}">
+           class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:bg-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-700 focus:bg-gray-700 {{ $sortFilter?->getValue() === 'newest' ? '!bg-gray-200 !bg-gray-600' : '' }}">
           Newest
         </a>
         <a href="{{ $filters->generateFilterLink('sort', 'unanswered') }}"
-           class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-2 focus:ring-orange-700 focus:text-orange-700 {{ $sortFilter?->getValue() === 'unanswered' ? '!bg-orange-200 !text-orange-600' : '' }}">
+           class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e hover:bg-gray-100 hover:bg-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-700 focus:bg-gray-700 {{ $sortFilter?->getValue() === 'unanswered' ? '!bg-gray-200 !bg-gray-600' : '' }}">
           Unanswered
         </a>
       </div>

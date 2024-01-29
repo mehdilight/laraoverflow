@@ -6,16 +6,8 @@
   <section class="bg-gray-50">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <a href="{{ route('auth.register.create') }}"
-         class="flex items-center mb-6 text-2xl font-semibold text-gray-900 flex items-center space-x-3 focus:outline-none focus:ring focus:ring-orange-200">
-        <svg aria-hidden="true" width="32" height="37" viewBox="0 0 32 37">
-          <path d="M26 33v-9h4v13H0V24h4v9h22Z" fill="#BCBBBB"></path>
-          <path
-            d="m21.5 0-2.7 2 9.9 13.3 2.7-2L21.5 0ZM26 18.4 13.3 7.8l2.1-2.5 12.7 10.6-2.1 2.5ZM9.1 15.2l15 7 1.4-3-15-7-1.4 3Zm14 10.79.68-2.95-16.1-3.35L7 23l16.1 2.99ZM23 30H7v-3h16v3Z"
-            fill="#F48024"></path>
-        </svg>
-        <span>
-          LaraOverflow
-        </span>
+         class="flex items-center mb-6 text-2xl font-semibold text-gray-900 flex items-center space-x-3 focus:outline-none focus:ring focus:ring-gray-200">
+        <x-app-logo />
       </a>
       <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -85,7 +77,7 @@
                     id="remember"
                     aria-describedby="remember"
                     type="checkbox"
-                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-orange-200 text-orange-400">
+                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-gray-200 bg-gray-400">
                 </div>
                 <div class="ml-3 text-sm">
                   <label for="remember" class="text-gray-500">Remember me</label>
@@ -93,7 +85,7 @@
               </div>
               <a
                 href="#"
-                class="text-sm font-medium text-primary-600 hover:underline focus:outline-none focus:ring focus:ring-orange-200"
+                class="text-sm font-medium text-primary-600 hover:underline focus:outline-none focus:ring focus:ring-gray-200"
               >
                 Forgot password?
               </a>
@@ -108,7 +100,7 @@
               Already have an account?
               <a
                 href="{{ route('auth.login.create') }}"
-                class="font-medium text-primary-600 hover:underline focus:outline-none focus:ring focus:ring-orange-200"
+                class="font-medium text-primary-600 hover:underline focus:outline-none focus:ring focus:ring-gray-200"
               >
                 Login
               </a>
