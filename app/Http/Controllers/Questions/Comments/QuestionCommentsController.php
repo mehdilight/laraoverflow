@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Questions\Comments;
 
+use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\Request;

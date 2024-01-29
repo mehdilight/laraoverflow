@@ -1,24 +1,26 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Questions\Answers;
 
 use App\BusinessServices\Voting\VotingService;
+use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class QuestionUpvotesController extends Controller
+class AnswerDownvotesController extends Controller
 {
     public function __construct(private VotingService $votingService)
     {
     }
 
-    public function store(Question $question)
+    public function store(Question $question, Answer $answer)
     {
         /** @var User $user */
         $user = Auth::user();
 
-        $this->votingService->upvote($question, $user);
+        $this->votingService->downvote($answer, $user);
 
         return redirect()
             ->back();

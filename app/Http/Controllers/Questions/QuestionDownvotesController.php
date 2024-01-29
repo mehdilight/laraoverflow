@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Questions;
 
 use App\BusinessServices\Voting\VotingService;
+use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;

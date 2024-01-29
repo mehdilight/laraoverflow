@@ -1,17 +1,17 @@
 <?php
 
 use App\Http\Controllers\AnswerCommentsController;
-use App\Http\Controllers\AnswerDownvotesController;
-use App\Http\Controllers\AnswerUpvotesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\QuestionAnswersController;
-use App\Http\Controllers\QuestionCommentsController;
-use App\Http\Controllers\QuestionDownvotesController;
-use App\Http\Controllers\QuestionsController;
-use App\Http\Controllers\QuestionsTaggedController;
-use App\Http\Controllers\QuestionUpvotesController;
-use App\Http\Controllers\TagsController;
+use App\Http\Controllers\Questions\Answers\AnswerDownvotesController;
+use App\Http\Controllers\Questions\Answers\AnswerUpvotesController;
+use App\Http\Controllers\Questions\Answers\QuestionAnswersController;
+use App\Http\Controllers\Questions\Comments\QuestionCommentsController;
+use App\Http\Controllers\Questions\QuestionDownvotesController;
+use App\Http\Controllers\Questions\QuestionsController;
+use App\Http\Controllers\Questions\QuestionsTaggedController;
+use App\Http\Controllers\Questions\QuestionUpvotesController;
+use App\Http\Controllers\Tags\TagsController;
 use Illuminate\Support\Facades\Route;
 
 /*
