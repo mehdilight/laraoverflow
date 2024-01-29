@@ -5,7 +5,7 @@
       <a href="#" class="font-medium text-base inline-block">
         {{ $comment->user->username }}
       </a>
-      <div class="text-xs text-black-500">
+      <div class="text-xs text-gray-500">
         {{ $comment->created_at->diffForHumans() }}
       </div>
     </div>

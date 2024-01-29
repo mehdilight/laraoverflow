@@ -2,7 +2,8 @@
   x-data="{
    isFocus: false, isOpen: false, tags: [], searchTerm: '', selectedTags: [], selectedOptionIndex: 1,
    async fetchResults() {
-    this.tags = await $fetch(`{{ route('tags.index') }}?q=${this.searchTerm}`);
+    const response = await $fetch(`{{ route('tags.index') }}?q=${this.searchTerm}`);
+    this.tags = response.json;
     this.selectedOptionIndex = 1;
    },
    close() {
@@ -12,9 +13,12 @@
     this.isOpen = !this.isOpen;
    },
    select(tag) {
-    this.selectedTags.push(tag);
-    this.searchTerm = '';
     this.$refs.searchInput.focus();
+    this.searchTerm = '';
+
+    if (!this.tagAlreadySelected(tag)) {
+      this.selectedTags.push(tag);
+    };
    },
    tagAlreadySelected(tag) {
     return this.selectedTags.find(selectedTag => tag.id === selectedTag.id)
@@ -35,11 +39,11 @@
     <input type="hidden" name="tags[]" :value="selectedTag.id">
   </template>
   <div
-    class="px-3 h-[38px] text-sm border overflow-hidden border-solid border-gray-300 rounded focus:outline-none focus:ring focus:ring-orange-200 focus:border-gray-300 w-full flex flex-wrap items-center gap-2"
-    :class="{'ring ring-orange-200 border-gray-300': isFocus }"
+    class="px-3 h-[38px] text-sm border overflow-hidden border-solid border-gray-300 rounded focus:outline-none w-full flex flex-wrap items-center gap-2"
+    :class="{'ring ring-violet-200 border-gray-300': isFocus }"
   >
     <template x-for="selectedTag in selectedTags">
-      <div x-text="selectedTag.option" class="text-xs bg-orange-400 px-2 text-orange-100 rounded">
+      <div x-text="selectedTag.option" class="text-xs bg-violet-100 text-violet-900 px-2 text-white rounded">
       </div>
     </template>
     <input
@@ -70,8 +74,7 @@
         role="option"
         class="text-sm px-3 py-3 cursor-pointer"
         :class="{
-          'bg-orange-100': selectedOptionIndex === index + 1,
-          'opacity-80 cursor-not-allowed': tagAlreadySelected(tag)
+          'bg-violet-100': selectedOptionIndex === index + 1
         }"
         tabindex="0"
         x-text="tag.option"
@@ -81,7 +84,7 @@
     </template>
     <div
       x-show="tags.length === 0"
-      class="text-sm text-black-500 px-3 py-3"
+      class="text-sm text-gray-500 px-3 py-3"
       tabindex="0"
     >
       No choice to choose from.

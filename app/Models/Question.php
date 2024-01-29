@@ -62,6 +62,6 @@ class Question extends Model
         $dom = new DOMDocument();
         $dom->loadHTML($body);
 
-        return Str::limit($dom->textContent, 150);
+        return Str::limit($dom->textContent, 200);
     }
 }

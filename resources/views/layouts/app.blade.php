@@ -37,9 +37,9 @@
   </script>
 </head>
 
-<body class="antialiased text-gray-950 bg-gray-50">
+<body class="antialiased text-gray-950">
 @include('layouts.header')
-<div class="main-container mx-auto flex">
+<div class="main-container mx-auto flex space-x-10">
   @include('layouts.sidebar')
   <div class="flex-grow">
     @yield('content')
