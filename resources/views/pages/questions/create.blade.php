@@ -5,7 +5,7 @@
 @section('content')
   <section>
     <div class="flex flex-col items-center justify-center py-10 mx-auto">
-      <div class="w-full bg-white">
+      <div class="w-full">
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
           Ask a public question
         </h1>

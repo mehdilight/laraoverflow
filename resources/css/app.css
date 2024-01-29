@@ -18,7 +18,7 @@
     }
 
     .btn-primary-outlined {
-        @apply bg-white border-violet-600 text-violet-700 hover:bg-violet-100;
+        @apply border-violet-600 text-violet-700 hover:bg-violet-100;
     }
 
     .btn-primary {
@@ -26,7 +26,7 @@
     }
 
     .input {
-        @apply text-sm border-solid border-gray-300 rounded focus:outline-none focus:ring focus:ring-violet-200 focus:border-violet-300 w-full;
+        @apply bg-white text-sm border-solid border-gray-300 rounded focus:outline-none focus:ring focus:ring-violet-200 focus:border-violet-300 w-full;
     }
 
     .input-has-error {
@@ -48,7 +48,7 @@
     }
 
     .btn-group-item.active {
-        @apply bg-violet-700 text-violet-100 hover:!bg-violet-800 focus:bg-violet-800;
+        @apply bg-violet-700 text-violet-100 hover:bg-violet-800 focus:bg-violet-800;
     }
 }
 

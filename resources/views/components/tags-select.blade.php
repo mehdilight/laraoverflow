@@ -39,7 +39,7 @@
     <input type="hidden" name="tags[]" :value="selectedTag.id">
   </template>
   <div
-    class="px-3 h-[38px] text-sm border overflow-hidden border-solid border-gray-300 rounded focus:outline-none w-full flex flex-wrap items-center gap-2"
+    class="bg-white px-3 h-[38px] text-sm border overflow-hidden border-solid border-gray-300 rounded focus:outline-none w-full flex flex-wrap items-center gap-2"
     :class="{'ring ring-violet-200 border-gray-300': isFocus }"
   >
     <template x-for="selectedTag in selectedTags">
