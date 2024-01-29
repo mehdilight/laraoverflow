@@ -1,20 +1,13 @@
-@php
-/**
- * @var \App\Models\Filter\Filters $filters
- * @var \Illuminate\Pagination\LengthAwarePaginator $questions
- */
-@endphp
-@extends('layouts.app')
+<x-layouts.app>
+  <x-slot:title>
+    Frequent questions - Laraoverflow
+  </x-slot:title>
 
-@section('title', 'Frequent questions - Laraoverflow')
-
-@section('content')
   <header class="space-y-4 py-10">
     <div class="flex items-center justify-between">
       <h1 class="text-2xl font-semibold">
         All Questions
       </h1>
-
     </div>
     <div class="flex justify-between items-center">
       @php
@@ -47,4 +40,4 @@
       {{ $questions->withQueryString()->links('components.pagination.tailwind') }}
     </div>
   </section>
-@endsection
+</x-layouts.app>

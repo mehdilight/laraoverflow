@@ -1,8 +1,7 @@
-@extends('layouts.app')
-
-@section('title', 'Tags - Laraoverflow')
-
-@section('content')
+<x-layouts.app>
+  <x-slot:title>
+    Users - Laraoverflow
+  </x-slot:title>
   <header class="space-y-4 px-4 py-4">
     <div>
       <h1 class="text-2xl font-semibold mb-4">
@@ -10,4 +9,4 @@
       </h1>
     </div>
   </header>
-@endsection
+</x-layouts.app>

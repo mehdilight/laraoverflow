@@ -1,8 +1,8 @@
-@extends('layouts.app')
+<x-layouts.app>
+  <x-slot:title>
+    Ask a public question - Laraoverflow
+  </x-slot:title>
 
-@section('title', 'Ask a public question - Laraoverflow')
-
-@section('content')
   <section>
     <div class="flex flex-col items-center justify-center py-10 mx-auto">
       <div class="w-full">
@@ -60,4 +60,4 @@
       </div>
     </div>
   </section>
-@endsection
+</x-layouts.app>

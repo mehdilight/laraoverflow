@@ -5,11 +5,10 @@
    */
 @endphp
 
-@extends('layouts.app')
-
-@section('title', sprintf('%s questions - Laraoverflow', $tag->name))
-
-@section('content')
+<x-layouts.app>
+  <x-slot:title>
+    {{ sprintf('%s questions - Laraoverflow', $tag->name) }}
+  </x-slot:title>
   <header class="space-y-4 px-4 py-4">
     <h1 class="text-2xl font-semibold">
       Questions tagged [{{ $tag->name }}]
@@ -49,4 +48,4 @@
       {{ $questions->withQueryString()->links('components.pagination.tailwind') }}
     </div>
   </section>
-@endsection
+</x-layouts.app>

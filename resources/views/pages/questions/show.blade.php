@@ -6,11 +6,11 @@
   use App\Models\Vote;
 @endphp
 
-@extends('layouts.app')
+<x-layouts.app>
+  <x-slot:title>
+    $question->title
+  </x-slot:title>
 
-@section('title', $question->title)
-
-@section('content')
   <header class="space-y-4 py-10">
     <div class="flex items-start justify-between">
       <div>
@@ -291,4 +291,4 @@
       </form>
     @endauth
   </main>
-@endsection
+</x-layouts.app>

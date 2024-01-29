@@ -1,9 +1,8 @@
-@extends('layouts.app')
-
-@section('title', 'Tags - Laraoverflow')
-
-@section('content')
-  <header class="space-y-4 px-4 py-4">
+<x-layouts.app>
+  <x-slot:title>
+    Tags - Laraoverflow
+  </x-slot:title>
+  <header class="space-y-4 py-10">
     <div>
       <h1 class="text-2xl font-semibold mb-4">
         Tags
@@ -16,4 +15,4 @@
   </header>
 
   <livewire:pages.tags.index />
-@endsection
+</x-layouts.app>

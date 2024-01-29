@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>@yield('title')</title>
+  <title>
+    {{ $title }}
+  </title>
   @vite('resources/css/app.css')
   <x-rich-text-trix-styles/>
   @stack('header_scripts')
@@ -37,12 +39,12 @@
   </script>
 </head>
 
-<body class="antialiased text-gray-950 bg-gray-50">
-@include('layouts.header')
+<body class="antialiased text-gray-900 bg-gray-50">
+<x-layouts.header />
 <div class="main-container mx-auto flex space-x-10">
-  @include('layouts.sidebar')
+  <x-layouts.sidebar />
   <div class="flex-grow">
-    @yield('content')
+    {{ $slot }}
   </div>
 </div>
 @vite(['resources/js/app.js'])

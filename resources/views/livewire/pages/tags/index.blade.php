@@ -1,4 +1,4 @@
-<section class="p-4">
+<section>
   <form class="mb-4">
     <div class="relative">
       <label for="search_tags" class="absolute top-0 bottom-0 left-0 flex items-center px-2">
