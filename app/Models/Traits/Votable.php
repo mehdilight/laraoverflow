@@ -14,15 +14,4 @@ trait Votable
     {
         return $this->morphMany(Vote::class, 'votable');
     }
-
-    protected function userVote(): Attribute
-    {
-        /** @var User $user */
-        $user = Auth::user();
-
-        return Attribute::make(function () use ($user) {
-            if (!$user instanceof User) return null;
-            return $this->votes()->where('user_id', $user->id)->first();
-        });
-    }
 }

@@ -43,7 +43,7 @@
   </header>
   <section class="space-y-4">
     @foreach($questions as $question)
-      <x-question.card :question="$question"/>
+      <x-blocks.questions.card :question="$question"/>
     @endforeach
     <div class="p-4">
       {{ $questions->withQueryString()->links('components.pagination.tailwind') }}

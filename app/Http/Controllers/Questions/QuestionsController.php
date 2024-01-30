@@ -66,6 +66,8 @@ class QuestionsController extends Controller
 
     public function show(Question $question, string $slug)
     {
+        $user = Auth::user();
+
         if ($question->slug !== $slug) {
             return redirect()->route('questions.show', [
                 'question' => $question,
@@ -73,7 +75,25 @@ class QuestionsController extends Controller
             ]);
         }
 
-        $question->loadMissing(['tags', 'answers.comments.user', 'comments.user']);
+        $question->loadMissing([
+            'user',
+            'tags',
+            'answers.user',
+            'answers.comments.user',
+            'votes' => function($query) use ($user) {
+                $query->where('user_id', $user->id);
+            },
+            'answers.votes' => function($query) use ($user) {
+                $query->where('user_id', $user->id);
+            },
+            'comments.user',
+            'bookmark'         => function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            },
+            'answers.bookmark' => function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            }]);
+
 
         return view('pages.questions.show', [
             'question' => $question
