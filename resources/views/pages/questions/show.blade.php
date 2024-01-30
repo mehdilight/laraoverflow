@@ -8,7 +8,7 @@
 
 <x-layouts.app>
   <x-slot:title>
-    $question->title
+    {{ $question->title }}
   </x-slot:title>
 
   <header class="space-y-4 py-10">
@@ -21,12 +21,12 @@
         </a>
         <div class="text-xs space-x-2 mt-2">
           <span>
-            <span class="text-black-600 font-medium">Asked</span> <span
-              class="text-gray-500">{{ $question->created_at->diffForHumans() }}</span>
+            <span class="text-black-600 font-medium">Asked</span>
+            <span class="text-gray-500">{{ $question->created_at->diffForHumans() }}</span>
           </span>
           <span>
-            <span class="text-black-600 font-medium">Modified</span> <span
-              class="text-gray-500">{{ $question->updated_at->diffForHumans() }}</span>
+            <span class="text-black-600 font-medium">Modified</span>
+            <span class="text-gray-500">{{ $question->updated_at->diffForHumans() }}</span>
           </span>
           <span>
             <span class="text-black-600 font-medium">Viewed</span> <span class="text-gray-500">30 times</span>
@@ -41,33 +41,52 @@
 
   <main class="text-sm py-4">
     <div class="flex space-x-4">
-      <div class="space-y-2">
-        <form action="{{ route('questions.upvote', [$question, $question->slug ]) }}" method="post">
-          @csrf
-          <button
-            class="flex items-center justify-center w-10 h-10 border border-solid border-violet-300 rounded-full focus:outline-none focus:ring focus:ring-violet-200 hover:outline-none hover:ring hover:ring-violet-200 @if($question?->userVote?->value === Vote::UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-violet-400 text-white border-violet-400 @endif"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
-              <path fill-rule="evenodd"
-                    d="M9.47 6.47a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 1 1-1.06 1.06L10 8.06l-3.72 3.72a.75.75 0 0 1-1.06-1.06l4.25-4.25Z"
-                    clip-rule="evenodd"/>
-            </svg>
-          </button>
-        </form>
-        <div class="text-gray-500 text-center text-xl">
-          {{ $question->votes_score }}
+      <div class="flex flex-col items-center space-y-4">
+        <div class="space-y-2">
+          <form action="{{ route('questions.upvote', [$question, $question->slug ]) }}" method="post">
+            @csrf
+            <button
+              class="flex items-center justify-center w-10 h-10 border border-solid border-violet-300 rounded-full focus:outline-none focus:ring focus:ring-violet-200 hover:outline-none hover:ring hover:ring-violet-200 @if($question?->userVote?->value === Vote::UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-violet-400 text-white border-violet-400 @endif"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
+                <path fill-rule="evenodd"
+                      d="M9.47 6.47a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 1 1-1.06 1.06L10 8.06l-3.72 3.72a.75.75 0 0 1-1.06-1.06l4.25-4.25Z"
+                      clip-rule="evenodd"/>
+              </svg>
+            </button>
+          </form>
+          <div class="text-gray-500 text-center text-xl">
+            {{ $question->votes_score }}
+          </div>
+          <form action="{{ route('questions.downvote', [$question, $question->slug ]) }}" method="post">
+            @csrf
+            <button
+              class="flex items-center justify-center w-10 h-10 border border-solid border-violet-300 rounded-full focus:outline-none focus:ring focus:ring-violet-200 hover:outline-none hover:ring hover:ring-violet-200 @if($question?->userVote?->value === Vote::DOWN_UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-violet-400 text-white border-violet-400 @endif">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
+                <path fill-rule="evenodd"
+                      d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                      clip-rule="evenodd"/>
+              </svg>
+            </button>
+          </form>
         </div>
-        <form action="{{ route('questions.downvote', [$question, $question->slug ]) }}" method="post">
-          @csrf
-          <button
-            class="flex items-center justify-center w-10 h-10 border border-solid border-violet-300 rounded-full focus:outline-none focus:ring focus:ring-violet-200 hover:outline-none hover:ring hover:ring-violet-200 @if($question?->userVote?->value === Vote::DOWN_UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-violet-400 text-white border-violet-400 @endif">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
-              <path fill-rule="evenodd"
-                    d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-                    clip-rule="evenodd"/>
-            </svg>
-          </button>
-        </form>
+        <div>
+          <form action="">
+            <button
+              data-tooltip-target="save-question"
+              data-tooltip-placement="right"
+              data-tooltip-style="light"
+              aria-describedby="save-question"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-violet-800">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+              </svg>
+            </button>
+            <div id="save-question" role="tooltip" data-placement="right" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+              Save this question.
+            </div>
+          </form>
+        </div>
       </div>
       <div class="flex-grow">
         <div class="trix-content">
@@ -201,7 +220,8 @@
                 </div>
                 <div>
                   <a href="#" class="flex space-x-1 items-center">
-                    <span class="w-5 rounded-md h-5 text-xs bg-violet-200 text-violet-600 flex items-center justify-center">
+                    <span
+                      class="w-5 rounded-md h-5 text-xs bg-violet-200 text-violet-600 flex items-center justify-center">
                       {{ \Illuminate\Support\Str::upper(substr($answer->user->username, 0, 1)) }}
                     </span>
                     <span class="text-violet-500 text-xs hover:text-violet-600 focus:text-violet-600">

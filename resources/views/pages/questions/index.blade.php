@@ -2,7 +2,6 @@
   <x-slot:title>
     Frequent questions - Laraoverflow
   </x-slot:title>
-
   <header class="space-y-4 py-10">
     <div class="flex items-center justify-between">
       <h1 class="text-2xl font-semibold">
