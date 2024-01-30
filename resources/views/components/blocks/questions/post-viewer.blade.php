@@ -1,17 +1,17 @@
 @php
-use App\Models\Vote;
-use App\Models\Question;
-use App\Models\Answer;
+  use App\Models\Vote;
+  use App\Models\Question;
+  use App\Models\Answer;
 
-/**
- * @var Question|Answer $model
- * @var ?Question $question
- */
+  /**
+   * @var Question|Answer $model
+   * @var ?Question $question
+   */
 
-$upvoteRoute = $model instanceof Question ? route('questions.upvote.store', [$model, $model->slug]) : route('questions.answers.upvote.store', [$question, $model]);
-$downvoteRoute = $model instanceof Question ? route('questions.downvote.store', [$model, $model->slug ]) : route('questions.answers.downvote.store', [$question, $model]);
-$storeCommentsRoute = $model instanceof Question ? route('questions.comments.store', [$model]) : route('questions.answers.comments.store', [$question, $model]);
-$bookmarkRoute = $model instanceof Question ? route('questions.bookmark.store', [$model, $model->slug]) : route('questions.answers.bookmark.store', [$question, $model]);
+  $upvoteRoute = $model instanceof Question ? route('questions.upvote.store', [$model, $model->slug]) : route('questions.answers.upvote.store', [$question, $model]);
+  $downvoteRoute = $model instanceof Question ? route('questions.downvote.store', [$model, $model->slug ]) : route('questions.answers.downvote.store', [$question, $model]);
+  $storeCommentsRoute = $model instanceof Question ? route('questions.comments.store', [$model]) : route('questions.answers.comments.store', [$question, $model]);
+  $bookmarkRoute = $model instanceof Question ? route('questions.bookmark.store', [$model, $model->slug]) : route('questions.answers.bookmark.store', [$question, $model]);
 @endphp
 
 <div class="flex space-x-4">
@@ -53,13 +53,17 @@ $bookmarkRoute = $model instanceof Question ? route('questions.bookmark.store', 
         method="post"
       >
         @csrf
+        @php
+          $randomTooltipId = \Symfony\Component\Uid\Ulid::generate();
+        @endphp
+
         @if($model->bookmark->first())
           @method('DELETE')
           <button
-            data-tooltip-target="unsave-question"
+            data-tooltip-target="{{ $randomTooltipId }}"
             data-tooltip-placement="right"
             data-tooltip-style="light"
-            aria-describedby="save-question"
+            aria-describedby="{{ $randomTooltipId }}"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                  class="w-6 h-6 text-violet-400">
@@ -68,16 +72,18 @@ $bookmarkRoute = $model instanceof Question ? route('questions.bookmark.store', 
                     clip-rule="evenodd"/>
             </svg>
           </button>
-          <div id="unsave-question" role="tooltip"
-               class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+          <div
+            id="{{ $randomTooltipId }}"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
             Unsave this question.
           </div>
         @else
           <button
-            data-tooltip-target="save-question"
+            data-tooltip-target="{{ $randomTooltipId }}"
             data-tooltip-placement="right"
             data-tooltip-style="light"
-            aria-describedby="save-question"
+            aria-describedby="{{ $randomTooltipId }}"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="w-6 h-6 text-violet-800">
@@ -85,8 +91,10 @@ $bookmarkRoute = $model instanceof Question ? route('questions.bookmark.store', 
                     d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"/>
             </svg>
           </button>
-          <div id="save-question" role="tooltip"
-               class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+          <div
+            id="{{ $randomTooltipId }}"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
             Save this question.
           </div>
         @endif
