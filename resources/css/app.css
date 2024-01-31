@@ -14,7 +14,7 @@
 
 @layer components {
     .btn {
-        @apply text-sm px-6 py-2 rounded focus:outline-none focus:ring whitespace-nowrap border border-solid;
+        @apply text-sm inline-block px-6 py-2 rounded focus:outline-none focus:ring whitespace-nowrap border border-solid;
     }
 
     .btn-primary-outlined {
@@ -23,6 +23,10 @@
 
     .btn-primary {
         @apply border-violet-600 bg-violet-600 text-white focus:bg-violet-700 hover:bg-violet-700 focus:ring-violet-700 focus:ring-violet-700;
+    }
+
+    .label {
+        @apply text-sm inline-block mb-2 font-medium
     }
 
     .input {

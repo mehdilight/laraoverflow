@@ -8,7 +8,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Index extends Component
+class UsersIndex extends Component
 {
     use WithPagination;
 
@@ -23,7 +23,7 @@ class Index extends Component
             })
             ->paginate();
 
-        $view = view('livewire.pages.users.index', [
+        $view = view('livewire.pages.users.users-index', [
             'users' => $users
         ]);
 
