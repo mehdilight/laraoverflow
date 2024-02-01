@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
             $table->foreignId('bookmark_list_id')->constrained()->restrictOnDelete();
-            $table->morphs('bookmarkable');
+            $table->foreignId('question_id')->constrained()->restrictOnDelete();
+            $table->foreignId('answer_id')->nullable()->constrained()->restrictOnDelete();
             $table->timestamps();
         });
     }
