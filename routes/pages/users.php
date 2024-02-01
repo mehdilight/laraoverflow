@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Pages\Users\ActivityShow;
 use App\Livewire\Pages\Users\UsersIndex;
 use App\Livewire\Pages\Users\ProfileShow;
 use App\Livewire\Pages\Users\PasswordEdit;
@@ -11,10 +12,18 @@ Route::prefix('users')
     ->group(function () {
         Route::get('/', UsersIndex::class)
             ->name('index');
-        Route::get('/{user}/profile', ProfileShow::class)
-            ->name('profile.show');
-        Route::get('/{user}/password/edit', PasswordEdit::class)
-            ->name('password.edit');
-        Route::get('/{user}/bookmark', BookmarkIndex::class)
-            ->name('bookmark.index');
+        Route::get('/{user}/activity', ActivityShow::class)
+            ->name('activity.show');
+
+        Route::middleware([
+            'auth'
+        ])
+            ->group(function () {
+                Route::get('/{user}/profile', ProfileShow::class)
+                    ->name('profile.show');
+                Route::get('/{user}/password/edit', PasswordEdit::class)
+                    ->name('password.edit');
+                Route::get('/{user}/bookmark', BookmarkIndex::class)
+                    ->name('bookmark.index');
+            });
     });

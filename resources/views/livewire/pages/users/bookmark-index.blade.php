@@ -1,54 +1,59 @@
-<div>
-  <header class="pt-10 pb-6">
-    <div class="flex space-x-3 mb-3">
-      <img class="rounded-lg block w-28 h-28"
-           src="https://laracasts.nyc3.digitaloceanspaces.com/members/avatars/1770.jpg?v=20"
-           alt="">
-      <div>
-        <h1 class="text-xl font-semibold mb-3">
-          {{ $user->username }}
-        </h1>
-        <p class="text-sm">
-          Owner at Laracasts
-        </p>
-        <p class="text-sm">
-          Member Since {{ $user->created_at->diffForHumans() }}
-        </p>
-        <p class="flex items-center space-x-2 text-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-               stroke="currentColor" class="w-6 h-6" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
-          </svg>
-          <span>
-            Lives In Winter Park, FL
-          </span>
-        </p>
-      </div>
-    </div>
-    <div class="btn-group mt-6" role="group">
-      <a
-        wire:navigate
-        href="{{ route('users.profile.show', $user) }}"
-        class="btn-group-item {{ \Illuminate\Support\Facades\Route::is('users.profile.show') ? 'active' : '' }}">
-        Profile
-      </a>
-      <a
-        wire:navigate
-        href="{{ route('users.password.edit', $user) }}"
-        class="btn-group-item {{ \Illuminate\Support\Facades\Route::is('users.password.edit') ? 'active' : '' }}">
-        Password
-      </a>
-      <a
-        wire:navigate
-        href="{{ route('users.bookmark.index', $user) }}"
-        class="btn-group-item {{ \Illuminate\Support\Facades\Route::is('users.bookmark.index') ? 'active' : '' }}">
-        Bookmark
-      </a>
-    </div>
-  </header>
-  <main>
+<x-blocks.users.user-dashboard
+  :user="$user"
+  currentTab="bookmarks"
+>
+  <main class="flex space-x-4">
+    <aside class="w-52 flex-shrink-0">
+      <nav class="w-full">
+        <ul class="text-sm space-y-2">
+          <li>
+            <a
+              href="#"
+              wire:click.prevent="changeBookmarkList('default')"
+              @class(['px-4 py-1 text-gray-900 block rounded border border-solid border-transparent hover:border-gray-200 hover:bg-gray-200', 'border border-solid border-violet-200 bg-violet-100 hover:bg-violet-100 focus:bg-violet-100 text-violet-800 font-medium' => $listName === 'default' ])
+            >
+              For later
+            </a>
+          </li>
+          <li>
+            <div class="flex justify-between items-center px-4 py-1 font-bold">
+              <span>
+                My Lists
+              </span>
 
+              <button type="button" wire:click="openModal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                </svg>
+              </button>
+            </div>
+            <ul class="space-y-1">
+              @foreach($this->bookmarkLists as $bookmarkList)
+                <li>
+                  <a
+                    wire:click.prevent="changeBookmarkList('{{ $bookmarkList->name }}')"
+                    href="#"
+                    @class(['px-4 py-1 text-gray-900 block rounded border border-solid border-transparent hover:border-gray-200 hover:bg-gray-200', 'border border-solid border-violet-200 bg-violet-100 hover:bg-violet-100 focus:bg-violet-100 text-violet-800 font-medium' => $listName === $bookmarkList->name ])
+                  >
+                    {{ $bookmarkList->name }}
+                  </a>
+                </li>
+              @endforeach
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    <section class="flex-grow space-y-4">
+      @foreach($this->bookmarksPaginated as $bookmark)
+        <x-blocks.users.bookmark-card
+          :bookmark="$bookmark"
+        />
+      @endforeach
+    </section>
   </main>
-</div>
+  @if ($isCreateBookmarkModalOpen)
+    <livewire:components.create-bookmark-list :user="$user"/>
+  @endif
+</x-blocks.users.user-dashboard>

@@ -18,7 +18,8 @@ class BookmarkAnswersController extends Controller
         $answer->bookmark()->firstOrCreate(
             [
                 'user_id'          => $user->id,
-                'bookmark_list_id' => 1
+                'bookmark_list_id' => 1,
+                'question_id'      => $question->id
             ]
         );
 

@@ -4,7 +4,6 @@ use App\Http\Controllers\Bookmark\BookmarkQuestionsController;
 use App\Http\Controllers\Questions\Answers\AnswerDownvotesController;
 use App\Http\Controllers\Questions\Answers\AnswerUpvotesController;
 use App\Http\Controllers\Questions\Answers\Bookmarks\BookmarkAnswersController;
-use App\Http\Controllers\Questions\Answers\Bookmarks\BookmarksController;
 use App\Http\Controllers\Questions\Answers\Comments\AnswerCommentsController;
 use App\Http\Controllers\Questions\Answers\QuestionAnswersController;
 use App\Http\Controllers\Questions\Comments\QuestionCommentsController;
