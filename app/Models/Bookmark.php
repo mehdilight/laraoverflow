@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Bookmark extends Model
 {
@@ -18,8 +17,13 @@ class Bookmark extends Model
         return $this->belongsTo(BookmarkList::class);
     }
 
-    public function bookmarkable(): MorphTo
+    public function question(): BelongsTo
     {
-        return $this->morphTo();
+        return $this->belongsTo(Question::class);
+    }
+
+    public function answer(): BelongsTo
+    {
+        return $this->belongsTo(Answer::class);
     }
 }
