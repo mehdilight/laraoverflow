@@ -4,12 +4,12 @@ namespace App\Models;
 
 use App\Models\Traits\Commentable;
 use App\Models\Traits\Votable;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use DOMDocument;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Answer extends Model
 {
@@ -24,8 +24,22 @@ class Answer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function bookmark(): MorphMany
+    public function bookmark(): HasMany
     {
-        return $this->morphMany(Bookmark::class, 'bookmarkable');
+        return $this->hasMany(Bookmark::class);
+    }
+
+    public function question(): BelongsTo
+    {
+        return $this->belongsTo(Question::class);
+    }
+
+    public function summary(): string
+    {
+        $body = $this->getAttribute('body');
+        $dom = new DOMDocument();
+        $dom->loadHTML($body);
+
+        return Str::limit($dom->textContent, 200);
     }
 }
