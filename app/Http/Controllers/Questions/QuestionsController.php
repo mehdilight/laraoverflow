@@ -144,6 +144,7 @@ class QuestionsController extends Controller
 
         $bookmarks = Bookmark::query()
             ->where('question_id', $question->id)
+            ->where('user_id', $user->id)
             ->get();
 
         $user->setRelation('votes', $votes);
