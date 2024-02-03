@@ -135,8 +135,12 @@ class QuestionsController extends Controller
         $filters->getFilters()->push(new Filter('sort', 'most_votes'));
     }
 
-    private function setUserRelations(User $user, Question $question, Collection $answers)
+    private function setUserRelations(?User $user, Question $question, Collection $answers)
     {
+        if (!$user instanceof User) {
+            return;
+        }
+
         $questionId = $question->id;
         $answersIds = $answers->pluck('id')->toArray();
 
