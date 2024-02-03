@@ -9,9 +9,12 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class BookmarkIndex extends Component
 {
+    use WithPagination;
+
     public User $user;
 
     #[Url(as: 'list_name', keep: true, history: true)]
@@ -46,7 +49,7 @@ class BookmarkIndex extends Component
             ->get();
     }
 
-    #[Computed(persist : true)]
+    #[Computed]
     public function bookmarksPaginated()
     {
         $list = BookmarkList::query()
@@ -63,7 +66,7 @@ class BookmarkIndex extends Component
                     'answer',
                 ]
             )
-            ->paginate();
+            ->paginate(2);
     }
 
     public function render()

@@ -10,9 +10,11 @@
             <a
               href="#"
               wire:click.prevent="changeBookmarkList('default')"
-              @class(['px-4 py-1 text-gray-900 block rounded border border-solid border-transparent hover:border-gray-200 hover:bg-gray-200', 'border border-solid border-violet-200 bg-violet-100 hover:bg-violet-100 focus:bg-violet-100 text-violet-800 font-medium' => $listName === 'default' ])
+              @class(['px-4 py-1 text-gray-900 block rounded border border-solid border-transparent
+                hover:border-gray-200 hover:bg-gray-200', 'border border-solid border-violet-200 bg-violet-100
+                hover:bg-violet-100 focus:bg-violet-100 text-violet-800 font-medium' => $listName === 'default' ])
             >
-              For later
+            For later
             </a>
           </li>
           <li>
@@ -34,9 +36,12 @@
                   <a
                     wire:click.prevent="changeBookmarkList('{{ $bookmarkList->name }}')"
                     href="#"
-                    @class(['px-4 py-1 text-gray-900 block rounded border border-solid border-transparent hover:border-gray-200 hover:bg-gray-200', 'border border-solid border-violet-200 bg-violet-100 hover:bg-violet-100 focus:bg-violet-100 text-violet-800 font-medium' => $listName === $bookmarkList->name ])
+                    @class(['px-4 py-1 text-gray-900 block rounded border border-solid border-transparent
+                  hover:border-gray-200 hover:bg-gray-200', 'border border-solid border-violet-200 bg-violet-100
+                  hover:bg-violet-100 focus:bg-violet-100 text-violet-800 font-medium' => $listName ===
+                  $bookmarkList->name ])
                   >
-                    {{ $bookmarkList->name }}
+                  {{ $bookmarkList->name }}
                   </a>
                 </li>
               @endforeach
@@ -51,6 +56,9 @@
           :bookmark="$bookmark"
         />
       @endforeach
+      <div class="py-4">
+        {{ $this->bookmarksPaginated->withQueryString()->links('vendor.livewire.tailwind') }}
+      </div>
     </section>
   </main>
   @if ($isCreateBookmarkModalOpen)
