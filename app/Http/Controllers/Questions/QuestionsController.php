@@ -14,6 +14,7 @@ use App\Models\Vote;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -68,8 +69,9 @@ class QuestionsController extends Controller
             ->route('questions.index');
     }
 
-    public function show(Question $question, string $slug)
+    public function show(Question $question, string $slug, Request $request)
     {
+        $filters = Filters::createFromRequest($request);
         if ($question->slug !== $slug) {
             return redirect()->route('questions.show', [
                 'question' => $question,
@@ -80,17 +82,26 @@ class QuestionsController extends Controller
         $question->loadMissing([
             'user',
             'tags',
-            'answers.user',
-            'answers.comments.user',
             'comments.user'
         ]);
 
+        $answers = $question->answers()
+            ->filter($filters)
+            ->with(
+                [
+                    'user',
+                    'comments.user',
+                ]
+            )->paginate();
+
         $user = Auth::user();
-        $this->setUserRelations($user, $question);
+        $this->setUserRelations($user, $question, $answers->getCollection());
 
         return view('pages.questions.show', [
             'question' => $question,
-            'user'     => $user
+            'answers'  => $answers,
+            'user'     => $user,
+            'filters'  => $filters
         ]);
     }
 
@@ -124,10 +135,10 @@ class QuestionsController extends Controller
         $filters->getFilters()->push(new Filter('sort', 'most_votes'));
     }
 
-    private function setUserRelations(User $user, Question $question)
+    private function setUserRelations(User $user, Question $question, Collection $answers)
     {
         $questionId = $question->id;
-        $answersIds = $question->answers->pluck('id')->toArray();
+        $answersIds = $answers->pluck('id')->toArray();
 
         $votes = Vote::query()
             ->where(function (Builder $query) use ($user, $questionId) {

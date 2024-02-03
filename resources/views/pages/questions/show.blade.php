@@ -41,14 +41,32 @@
   <main class="text-sm py-4">
     <x-blocks.questions.post-viewer :model="$question" :user="$user" />
 
-    @if($question->answers->isNotEmpty())
+    @if($answers->isNotEmpty())
       <div>
-        <h2 class="text-xl mb-4 inline-block">
-          Answers
-        </h2>
-        @foreach($question->answers as $answer)
-          <x-blocks.questions.post-viewer :model="$answer" :question="$question" :user="$user" />
-        @endforeach
+        <header class="flex items-center justify-between mb-4">
+          <h2 class="text-xl inline-block">
+            Answers
+          </h2>
+          <form x-data x-ref="form" action="{{ route('questions.show', [$question, $question->slug]) }}">
+            <label for="answers_filter" class="sr-only"></label>
+            <select @change="$refs.form.submit()" id="answers_filter" name="filters[sort]" class="select">
+              <option value="most_scores" @selected($filters->findByName('sort')?->getValue() === 'most_scores')>
+                Highest score
+              </option>
+              <option value="newest" @selected($filters->findByName('sort')?->getValue() === 'newest')>
+                Newsest
+              </option>
+            </select>
+          </form>
+        </header>
+        <div class="grid gap-4">
+          @foreach($answers as $answer)
+            <x-blocks.questions.post-viewer :model="$answer" :question="$question" :user="$user" />
+          @endforeach
+        </div>
+        <div class="p-4">
+          {{ $answers->withQueryString()->links('components.pagination.tailwind') }}
+        </div>
       </div>
     @else
       <div class="text-sm text-gray-500 py-4">
