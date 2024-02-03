@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Questions;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
+use App\Models\Bookmark;
 use App\Models\Filter\Filter;
 use App\Models\Filter\Filters;
 use App\Models\Question;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Vote;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -66,8 +70,6 @@ class QuestionsController extends Controller
 
     public function show(Question $question, string $slug)
     {
-        $user = Auth::user();
-
         if ($question->slug !== $slug) {
             return redirect()->route('questions.show', [
                 'question' => $question,
@@ -80,23 +82,15 @@ class QuestionsController extends Controller
             'tags',
             'answers.user',
             'answers.comments.user',
-            'votes' => function($query) use ($user) {
-                $query->where('user_id', $user->id);
-            },
-            'answers.votes' => function($query) use ($user) {
-                $query->where('user_id', $user->id);
-            },
-            'comments.user',
-            'bookmark'         => function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            },
-            'answers.bookmark' => function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            }]);
+            'comments.user'
+        ]);
 
+        $user = Auth::user();
+        $this->setUserRelations($user, $question);
 
         return view('pages.questions.show', [
-            'question' => $question
+            'question' => $question,
+            'user'     => $user
         ]);
     }
 
@@ -128,5 +122,31 @@ class QuestionsController extends Controller
         }
 
         $filters->getFilters()->push(new Filter('sort', 'most_votes'));
+    }
+
+    private function setUserRelations(User $user, Question $question)
+    {
+        $questionId = $question->id;
+        $answersIds = $question->answers->pluck('id')->toArray();
+
+        $votes = Vote::query()
+            ->where(function (Builder $query) use ($user, $questionId) {
+                $query->where('votable_type', Question::class)
+                    ->where('votable_id', $questionId)
+                    ->where('user_id', $user->id);
+            })
+            ->orWhere(function (Builder $query) use ($user, $answersIds, $questionId) {
+                $query->where('votable_type', Answer::class)
+                    ->whereIn('votable_id', $answersIds)
+                    ->where('user_id', $user->id);
+            })
+            ->get();
+
+        $bookmarks = Bookmark::query()
+            ->where('question_id', $question->id)
+            ->get();
+
+        $user->setRelation('votes', $votes);
+        $user->setRelation('bookmarks', $bookmarks);
     }
 }

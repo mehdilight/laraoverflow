@@ -39,7 +39,7 @@
   </header>
 
   <main class="text-sm py-4">
-    <x-blocks.questions.post-viewer :model="$question" />
+    <x-blocks.questions.post-viewer :model="$question" :user="$user" />
 
     @if($question->answers->isNotEmpty())
       <div>
@@ -47,7 +47,7 @@
           Answers
         </h2>
         @foreach($question->answers as $answer)
-          <x-blocks.questions.post-viewer :model="$answer" :question="$question" />
+          <x-blocks.questions.post-viewer :model="$answer" :question="$question" :user="$user" />
         @endforeach
       </div>
     @else

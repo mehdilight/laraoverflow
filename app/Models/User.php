@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -34,7 +35,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password'          => 'hashed',
     ];
 
     protected function isAuthenticated(): Attribute
@@ -57,5 +58,33 @@ class User extends Authenticatable
     public function bookmarkLists(): HasMany
     {
         return $this->hasMany(BookmarkList::class);
+    }
+
+    public function votes(): HasMany
+    {
+        return $this->hasMany(Vote::class);
+    }
+
+    public function bookmarked(Model $model): bool
+    {
+        return $this->bookmarks
+            ->where(get_class($model) === Question::class ? 'question_id' : 'answer_id', $model->id)
+            ->first() instanceof Bookmark;
+    }
+
+    public function upvoted(Model $model): bool
+    {
+        return $this->votes
+            ->where('votable_type', get_class($model))
+            ->where('votable_id', $model->id)
+            ->first()?->value === Vote::UPVOTE_TYPE;
+    }
+
+    public function downvoted(Model $model): bool
+    {
+        return $this->votes
+                ->where('votable_type', get_class($model))
+                ->where('votable_id', $model->id)
+                ->first()?->value === Vote::DOWN_UPVOTE_TYPE;
     }
 }

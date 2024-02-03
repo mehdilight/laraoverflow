@@ -6,6 +6,7 @@
   /**
    * @var Question|Answer $model
    * @var ?Question $question
+   * @var ?\App\Models\User $user
    */
 
   $upvoteRoute = $model instanceof Question ? route('questions.upvote.store', [$model, $model->slug]) : route('questions.answers.upvote.store', [$question, $model]);
@@ -23,7 +24,7 @@
       >
         @csrf
         <button
-          class="flex items-center justify-center w-10 h-10 border border-solid border-violet-300 rounded-full focus:outline-none focus:ring focus:ring-violet-200 hover:outline-none hover:ring hover:ring-violet-200 @if($model->votes->first()?->value === Vote::UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-violet-400 text-white border-violet-400 @endif"
+          class="flex items-center justify-center w-10 h-10 border border-solid border-violet-300 rounded-full focus:outline-none focus:ring focus:ring-violet-200 hover:outline-none hover:ring hover:ring-violet-200 @if($user && $user->upvoted($model)) hover:ring-0 hover:ring-transparent bg-violet-400 text-white border-violet-400 @endif"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
             <path fill-rule="evenodd"
@@ -38,7 +39,7 @@
       <form action="{{ $downvoteRoute }}" method="post">
         @csrf
         <button
-          class="flex items-center justify-center w-10 h-10 border border-solid border-violet-300 rounded-full focus:outline-none focus:ring focus:ring-violet-200 hover:outline-none hover:ring hover:ring-violet-200 @if($model->votes->first()?->value === Vote::DOWN_UPVOTE_TYPE) hover:ring-0 hover:ring-transparent bg-violet-400 text-white border-violet-400 @endif">
+          class="flex items-center justify-center w-10 h-10 border border-solid border-violet-300 rounded-full focus:outline-none focus:ring focus:ring-violet-200 hover:outline-none hover:ring hover:ring-violet-200 @if($user && $user->downvoted($model)) hover:ring-0 hover:ring-transparent bg-violet-400 text-white border-violet-400 @endif">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
             <path fill-rule="evenodd"
                   d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
@@ -57,7 +58,7 @@
           $randomTooltipId = \Symfony\Component\Uid\Ulid::generate();
         @endphp
 
-        @if($model->bookmark->first())
+        @if($user instanceof \App\Models\User && $user->bookmarked($model))
           @method('DELETE')
           <button
             data-tooltip-target="{{ $randomTooltipId }}"
