@@ -4,16 +4,23 @@ namespace App\Livewire\Pages\Users;
 
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Arr;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Illuminate\Support\Facades\Gate;
+use Livewire\WithFileUploads;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileShow extends Component
 {
     use AuthorizesRequests;
+    use WithFileUploads;
+
 
     public User $user;
+
+    #[Validate('nullable|image|max:1024')] // 1MB Max
+    public $profileImage;
 
     #[Validate('required')]
     public string $name;
@@ -45,6 +52,7 @@ class ProfileShow extends Component
         $this->location = $this->user->location;
         $this->website_url = $this->user->website_url;
         $this->bio = $this->user->bio;
+        $this->profileImagePath = $this->user->profile_photo_url;
     }
 
     public function save()
@@ -53,11 +61,31 @@ class ProfileShow extends Component
             abort(Response::HTTP_UNAUTHORIZED);
         }
 
+        if ($this->profileImage){
+            $photoPath = $this->profileImage->storePublicly('profile-photos', [
+                'disk' => 'public'
+            ]);
+        }
+
         $validatedUserInfo = $this->validate();
 
-        $this->user->update($validatedUserInfo);
+        $this->user->update(
+            array_merge(
+                Arr::only($validatedUserInfo, [
+                    'name',
+                    'username',
+                    'job_title',
+                    'location',
+                    'website_url',
+                    'bio'
+                ]),
+                [
+                    'profile_photo_path' => $this->profileImage ? $photoPath : null
+                ]
+            )
+        );
 
-        return $this->redirect(route('users.password.edit', $this->user), true);
+        return $this->redirect(route('users.profile.show', $this->user));
     }
 
     public function render()

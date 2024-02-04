@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -86,5 +87,23 @@ class User extends Authenticatable
                 ->where('votable_type', get_class($model))
                 ->where('votable_id', $model->id)
                 ->first()?->value === Vote::DOWN_UPVOTE_TYPE;
+    }
+
+    protected function profilePhotoUrl(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->profile_photo_path
+                ? Storage::disk('public')->url($this->profile_photo_path)
+                : $this->defaultProfilePhotoUrl();
+        });
+    }
+
+    protected function defaultProfilePhotoUrl(): string
+    {
+        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
+            return mb_substr($segment, 0, 1);
+        })->join(' '));
+
+        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=7F9CF5&background=EBF4FF';
     }
 }

@@ -1,8 +1,8 @@
 <div>
   <header class="pt-10 pb-6">
     <div class="flex space-x-3 mb-3">
-      <img class="rounded-lg block w-28 h-28"
-           src="https://laracasts.nyc3.digitaloceanspaces.com/members/avatars/1770.jpg?v=20"
+      <img class="rounded-lg block w-28 h-28 object-cover"
+           src="{{ $user->profile_photo_url }}"
            alt="">
       <div>
         <h1 class="text-xl font-semibold mb-3">

@@ -11,8 +11,46 @@
         Update your profile and personal details here
       </p>
     </header>
-    <form wire:submit="save">
+    <form
+      x-data="{
+        photoPreview: '{{ $user->profile_photo_url }}',
+        updatePhotoPreview () {
+          const photo = this.$refs.photoInput.files[0];
+          if (! photo) return;
+
+          const reader = new FileReader();
+
+          reader.onload = (e) => {
+            this.photoPreview =  e.target.result;
+          };
+          reader.readAsDataURL(photo);
+        }
+      }"
+      wire:submit="save"
+    >
       <div class="grid grid-cols-3 gap-2">
+        <div class="col-span-3">
+          <div class="w-[150px] h-[150px] relative overflow-hidden rounded">
+            <img
+              class="block w-full h-full object-cover"
+              :src="photoPreview"
+              alt=""
+            >
+            <input
+              type="file"
+              name="profile_image"
+              id="profile_image"
+              class="hidden"
+              @change="updatePhotoPreview()"
+              wire:model="profileImage"
+              x-ref="photoInput"
+            >
+            <label for="profile_image"
+                   class="bg-violet-700 hover:bg-violet-800 focus:bg-violet-800 text-white text-center text-xs absolute bottom-0 left-0 w-full cursor-pointer py-2">
+              Change Profile Image
+            </label>
+          </div>
+        </div>
         <div>
           <label for="full_name" class="label">Full name</label>
           <input type="text" class="input" name="full_name" id="full_name" wire:model="name">
