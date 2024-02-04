@@ -29,7 +29,7 @@
     </li>
     <li>
       <a
-        class="flex items-center space-x-2 px-4 py-2 text-sm rounded-sm {{ \Illuminate\Support\Facades\Route::is('users.index') ? "bg-violet-100 relative after:bg-violet-400 after:content-[''] after:w-1 after:rounded after:h-full after:block after:absolute after:right-0" : '' }}"
+        class="flex items-center space-x-2 px-4 py-2 text-sm rounded-sm {{ \Illuminate\Support\Facades\Route::is('users.*') ? "bg-violet-100 relative after:bg-violet-400 after:content-[''] after:w-1 after:rounded after:h-full after:block after:absolute after:right-0" : '' }}"
         href="{{ route('users.index') }}">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
              class="w-6 h-6">
