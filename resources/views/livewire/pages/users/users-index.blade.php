@@ -23,25 +23,24 @@
   </form>
   <div class="grid grid-cols-4 gap-4">
     @foreach($users as $user)
-      <section class="py-4 px-6 rounded-lg shadow-lg bg-white">
-        <div class="flex space-x-3">
-          <img class="rounded-full w-10 h-10" src="https://media.licdn.com/dms/image/C4E03AQFog-dpZdNi4A/profile-displayphoto-shrink_800_800/0/1583457495504?e=2147483647&v=beta&t=13hretZCXqnp8e-D-ftcNRABqF7XXdEHP6ZyX5D1QUo" alt="">
-          <div class="leading-5">
-            <h3 class="text-sm font-semibold">
-              {{ $user->username }}
-            </h3>
-            <span class="text-xs">
-              Software engineer
-            </span>
+      <a class="group block" href="{{ route('users.activity.show', [$user]) }}" wire:navigate>
+        <section class="py-4 px-6 rounded-lg shadow-lg bg-white">
+          <div class="flex space-x-3">
+            <img class="rounded w-10 h-10 object-cover" src="{{ $user->profile_photo_url }}" alt="">
+            <div class="leading-5">
+              <h3 class="text-sm font-semibold">
+                {{ $user->username }}
+              </h3>
+              <span class="text-xs">
+                {{ $user->job_title }}
+              </span>
+            </div>
           </div>
-        </div>
-        <p class="text-xs text-gray-500 mt-3">
-          System Configuration Management Administrator (ClearCase, SVN, Git), defining various merge workflows between
-          branches.
-          Development Architect, which involves:
-          tools support around java technologies, including eclipse.
-        </p>
-      </section>
+          <p class="text-xs text-gray-500 mt-3 group-hover:text-violet-600">
+            {{ $user->bio }}
+          </p>
+        </section>
+      </a>
     @endforeach
   </div>
   <div class="py-4">
