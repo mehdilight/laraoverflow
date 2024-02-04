@@ -8,23 +8,27 @@
         <h1 class="text-xl font-semibold mb-3">
           {{ $user->username }}
         </h1>
-        <p class="text-sm">
-          Owner at Laracasts
-        </p>
+        @if ($user->job_title)
+          <p class="text-sm">
+            {{ $user->job_title }}
+          </p>
+        @endif
         <p class="text-sm">
           Member Since {{ $user->created_at->diffForHumans() }}
         </p>
-        <p class="flex items-center space-x-2 text-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-               stroke="currentColor" class="w-6 h-6" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
-          </svg>
-          <span>
-            Lives In Winter Park, FL
-          </span>
-        </p>
+        @if ($user->location)
+          <p class="flex items-center space-x-2 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="w-6 h-6" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
+            </svg>
+            <span>
+              {{ $user->location }}
+            </span>
+          </p>
+        @endif
       </div>
     </div>
     <div class="btn-group mt-6" role="group">
