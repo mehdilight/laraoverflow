@@ -66,7 +66,7 @@ class BookmarkIndex extends Component
                     'answer',
                 ]
             )
-            ->paginate(2);
+            ->paginate();
     }
 
     public function render()
