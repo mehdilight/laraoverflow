@@ -61,4 +61,13 @@ class Answer extends Model
             ]
         )->thenReturn();
     }
+
+    public function markAsAccepted(): bool
+    {
+        return $this->update(
+            [
+                'accepted' => true
+            ]
+        );
+    }
 }

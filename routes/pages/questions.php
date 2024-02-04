@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Bookmark\BookmarkQuestionsController;
+use App\Http\Controllers\Questions\Answers\AcceptAnswersController;
 use App\Http\Controllers\Questions\Answers\AnswerDownvotesController;
 use App\Http\Controllers\Questions\Answers\AnswerUpvotesController;
 use App\Http\Controllers\Questions\Answers\Bookmarks\BookmarkAnswersController;
@@ -59,6 +60,11 @@ Route::prefix('questions')
         Route::post('/{question}/answers/{answer}/downvote', [AnswerDownvotesController::class, 'store'])
             ->middleware('auth')
             ->name('answers.downvote.store');
+
+        // accepted answer
+        Route::post('/{question}/answers/{answerId}/accept', [AcceptAnswersController::class, 'store'])
+            ->middleware('auth')
+            ->name('answers.accept.store');
 
         // question actions
         Route::get('/{question}/{slug}', [QuestionsController::class, 'show'])

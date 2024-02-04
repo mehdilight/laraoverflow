@@ -18,6 +18,7 @@
 <div class="flex space-x-4">
   <div class="flex flex-col items-center space-y-4">
     <div class="space-y-2">
+      <!-- upvote -->
       <form
         action="{{ $upvoteRoute }}"
         method="post"
@@ -36,6 +37,7 @@
       <div class="text-gray-500 text-center text-xl">
         {{ $model->votes_score }}
       </div>
+      <!-- downvote -->
       <form action="{{ $downvoteRoute }}" method="post">
         @csrf
         <button
@@ -48,59 +50,88 @@
         </button>
       </form>
     </div>
-    <div>
+    <!-- bookmark -->
+    <form
+      action='{{ $bookmarkRoute  }}'
+      method="post"
+    >
+      @csrf
+      @php
+        $randomTooltipId = \Symfony\Component\Uid\Ulid::generate();
+      @endphp
+
+      @if($user instanceof \App\Models\User && $user->bookmarked($model))
+        @method('DELETE')
+        <button
+          data-tooltip-target="{{ $randomTooltipId }}"
+          data-tooltip-placement="right"
+          data-tooltip-style="light"
+          aria-describedby="{{ $randomTooltipId }}"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+               class="w-6 h-6 text-violet-400">
+            <path fill-rule="evenodd"
+                  d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
+                  clip-rule="evenodd"/>
+          </svg>
+        </button>
+        <div
+          id="{{ $randomTooltipId }}"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+          Unsave this question.
+        </div>
+      @else
+        <button
+          data-tooltip-target="{{ $randomTooltipId }}"
+          data-tooltip-placement="right"
+          data-tooltip-style="light"
+          aria-describedby="{{ $randomTooltipId }}"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="w-6 h-6 text-violet-800">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"/>
+          </svg>
+        </button>
+        <div
+          id="{{ $randomTooltipId }}"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+          Save this question.
+        </div>
+      @endif
+    </form>
+    <!-- accepted answer -->
+    @if ($model instanceof \App\Models\Answer && $user->id === $question->user_id && !$question->acceptedAnswer)
       <form
-        action='{{ $bookmarkRoute  }}'
+        action='{{ route('questions.answers.accept.store', [$model, $question]) }}'
         method="post"
       >
         @csrf
         @php
-          $randomTooltipId = \Symfony\Component\Uid\Ulid::generate();
+          $markAsSolvedTooltip = \Symfony\Component\Uid\Ulid::generate();
         @endphp
-
-        @if($user instanceof \App\Models\User && $user->bookmarked($model))
-          @method('DELETE')
-          <button
-            data-tooltip-target="{{ $randomTooltipId }}"
-            data-tooltip-placement="right"
-            data-tooltip-style="light"
-            aria-describedby="{{ $randomTooltipId }}"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                 class="w-6 h-6 text-violet-400">
-              <path fill-rule="evenodd"
-                    d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
-                    clip-rule="evenodd"/>
-            </svg>
-          </button>
-          <div
-            id="{{ $randomTooltipId }}"
-            role="tooltip"
-            class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
-            Unsave this question.
-          </div>
-        @else
-          <button
-            data-tooltip-target="{{ $randomTooltipId }}"
-            data-tooltip-placement="right"
-            data-tooltip-style="light"
-            aria-describedby="{{ $randomTooltipId }}"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                 stroke="currentColor" class="w-6 h-6 text-violet-800">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"/>
-            </svg>
-          </button>
-          <div
-            id="{{ $randomTooltipId }}"
-            role="tooltip"
-            class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
-            Save this question.
-          </div>
-        @endif
+        <button
+          data-tooltip-target="{{ $markAsSolvedTooltip }}"
+          data-tooltip-placement="right"
+          data-tooltip-style="light"
+          aria-describedby="{{ $markAsSolvedTooltip }}"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="w-6 h-6 text-violet-800">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+        </button>
+        <div
+          id="{{ $markAsSolvedTooltip }}"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+          Click to mark this as your accepted answer
+        </div>
       </form>
-    </div>
+    @endif
   </div>
 
   <div class="flex-grow">

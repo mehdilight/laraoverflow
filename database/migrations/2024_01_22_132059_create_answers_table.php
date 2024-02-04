@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('question_id')->constrained()->restrictOnDelete();
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
             $table->bigInteger('votes_score')->default(0)->index();
+            $table->boolean('accepted')->default(false);
             $table->timestamps();
         });
     }

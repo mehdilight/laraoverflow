@@ -26,7 +26,7 @@ class QuestionsController extends Controller
         $this->setDefaultSort($filters);
 
         $questions = Question::filter($filters)
-            ->with('tags', 'user')
+            ->with('tags', 'user', 'acceptedAnswer')
             ->withCount('answers')
             ->paginate();
 
