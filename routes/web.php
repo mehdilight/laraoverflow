@@ -1,7 +1,11 @@
 <?php
 
 
+use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    return redirect()->route('questions.index');
+});
 
 require __DIR__ . '/pages/auth.php';
 require __DIR__ . '/pages/questions.php';
