@@ -11,6 +11,8 @@ class BookmarkList extends Model
 {
     use HasFactory;
 
+    public const DEFAULT = 'default';
+
     protected $guarded = [];
 
     public function user(): BelongsTo

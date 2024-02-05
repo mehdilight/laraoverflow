@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\BookmarkList;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,12 +25,19 @@ class RegisterController extends Controller
             'password' => ['required', 'confirmed'],
         ]);
 
+        /** @var User $user */
         $user = User::query()->create([
             'username' => $request->get('username'),
             'name'     => $request->get('name'),
             'email'    => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
+
+        $user->bookmarkLists()->create(
+            [
+                'name' => BookmarkList::DEFAULT
+            ]
+        );
 
         Auth::login($user);
 
