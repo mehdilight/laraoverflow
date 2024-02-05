@@ -18,13 +18,15 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => ['required', 'string', 'max:255'],
+            'name'     => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'regex:/^[A-Za-z0-9_]+$/', sprintf('unique:%s,username', User::class), 'max:40'],
             'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed'],
         ]);
 
         $user = User::query()->create([
             'username' => $request->get('username'),
+            'name'     => $request->get('name'),
             'email'    => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);

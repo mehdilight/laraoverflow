@@ -17,7 +17,22 @@
           <form class="space-y-4 md:space-y-6" action="{{ route('auth.register.store') }}" method="post">
             @csrf
             <div>
-              <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Display name</label>
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Full name</label>
+              <input
+                type="text"
+                name="name"
+                id="password"
+                value="{{ old('name') }}"
+                class="input @error('name') input-has-error @enderror"
+              >
+              @error('name')
+              <p class="text-red-500 text-xs mt-1">
+                {{ $message }}
+              </p>
+              @enderror
+            </div>
+            <div>
+              <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
               <input
                 type="text"
                 name="username"
