@@ -4,7 +4,7 @@ $user =  \Illuminate\Support\Facades\Auth::user();
 
 <header
   class="border-solid border-b border-gray-200 sticky top-0 right-0 bg-white z-10 before:content-[''] before:absolute before:w-full before:h-[4px] before:bg-violet-500 ">
-  <div class="main-container mx-auto flex px-4 py-4 gap-4">
+  <div class="main-container mx-auto flex px-4 py-4 gap-4 md:pr-10">
     <button class="pr-2 md:hidden" @click="isSidebarClosed=false">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />

@@ -10,7 +10,7 @@
     {{ $question->title }}
   </x-slot:title>
 
-  <header class="space-y-4 py-10">
+  <header class="space-y-4 md:mb-10">
     <div class="flex items-start justify-between">
       <div>
         <a href="{{ route('questions.show', [$question, $question->slug]) }}">

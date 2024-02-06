@@ -2,7 +2,7 @@
   <x-slot:title>
     Tags - Laraoverflow
   </x-slot:title>
-  <header class="space-y-4 py-10">
+  <header class="space-y-4 md:mb-10">
     <div>
       <h1 class="text-2xl font-semibold mb-4">
         Tags
