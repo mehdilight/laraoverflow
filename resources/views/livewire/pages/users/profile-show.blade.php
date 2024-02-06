@@ -28,8 +28,8 @@
       }"
       wire:submit="save"
     >
-      <div class="grid grid-cols-3 gap-2">
-        <div class="col-span-3">
+      <div class="grid md:grid-cols-3 gap-2">
+        <div class="md:col-span-3">
           <div class="w-[150px] h-[150px] relative overflow-hidden rounded">
             <img
               class="block w-full h-full object-cover"
@@ -75,7 +75,7 @@
           <label for="website" class="label">Your website</label>
           <input type="text" class="input" name="website" id="website" wire:model="website_url">
         </div>
-        <div class="col-span-3">
+        <div class="md:col-span-3">
           <label for="bio" class="label">About me</label>
           <textarea name="bio" id="bio" class="input resize-none" wire:model="bio"></textarea>
         </div>

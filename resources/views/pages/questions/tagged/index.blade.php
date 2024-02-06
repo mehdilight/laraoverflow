@@ -9,7 +9,7 @@
   <x-slot:title>
     {{ sprintf('%s questions - Laraoverflow', $tag->name) }}
   </x-slot:title>
-  <header class="space-y-4 py-10">
+  <header class="space-y-4 md:mb-10">
     <h1 class="text-2xl font-semibold">
       Questions tagged [{{ $tag->name }}]
     </h1>

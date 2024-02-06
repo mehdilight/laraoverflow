@@ -1,5 +1,5 @@
 <div>
-  <header class="pt-10 pb-6">
+  <header class="pb-6">
     <div class="flex space-x-3 mb-3">
       <img class="rounded-lg block w-28 h-28 object-cover"
            src="{{ $user->profile_photo_url }}"

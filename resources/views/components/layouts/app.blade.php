@@ -39,11 +39,11 @@
   </script>
 </head>
 
-<body class="antialiased text-gray-900 bg-gray-50">
+<body class="antialiased text-gray-900 bg-gray-50" x-data="{isSidebarClosed: true}">
 <x-layouts.header />
-<div class="main-container mx-auto flex space-x-10">
+<div class="main-container mx-auto md:flex">
   <x-layouts.sidebar />
-  <div class="flex-grow">
+  <div class="flex-grow p-4 md:p-10">
     {{ $slot }}
   </div>
 </div>

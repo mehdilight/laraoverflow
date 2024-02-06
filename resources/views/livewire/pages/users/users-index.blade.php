@@ -1,5 +1,5 @@
 <div>
-  <header class="py-10">
+  <header class="md:mb-10">
     <h1 class="text-2xl font-semibold mb-4">
       Users
     </h1>
@@ -21,7 +21,7 @@
         class="text-sm border-solid border-gray-300 rounded pl-8 focus:outline-none focus:ring focus:ring-violet-200 focus:border-gray-300">
     </div>
   </form>
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
     @foreach($users as $user)
       <a class="group block" href="{{ route('users.activity.show', [$user]) }}" wire:navigate>
         <section class="py-4 px-6 rounded-lg shadow-lg bg-white">

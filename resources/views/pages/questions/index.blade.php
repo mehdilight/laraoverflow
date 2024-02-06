@@ -2,13 +2,16 @@
   <x-slot:title>
     Frequent questions - Laraoverflow
   </x-slot:title>
-  <header class="space-y-4 py-10">
+  <header class="space-y-4 mb-4 md:mb-10">
     <div class="flex items-center justify-between">
       <h1 class="text-2xl font-semibold">
         All Questions
       </h1>
+      <a class="btn btn-primary-outlined text-xs md:hidden" href="{{ route('questions.create') }}">
+        Ask Question
+      </a>
     </div>
-    <div class="flex justify-between items-center">
+    <div class="md:flex justify-between items-center">
       @php
         $sortFilter = $filters->findByName('sort');
       @endphp
@@ -26,7 +29,7 @@
           Unanswered
         </a>
       </div>
-      <a class="btn btn-primary-outlined" href="{{ route('questions.create') }}">
+      <a class="hidden md:block btn btn-primary-outlined" href="{{ route('questions.create') }}">
         Ask Question
       </a>
     </div>
