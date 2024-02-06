@@ -3,7 +3,7 @@
     class="fixed md:block bg-white w-[200px] md:sticky z-10 top-[71px] flex-shrink-0"
     style="height: calc(100vh - 64px)"
     :class="{'hidden': isSidebarClosed}"
-    x-cloak
+    x-cloak md-x-cloak-none
   >
     <ul class="mt-4">
       <li>

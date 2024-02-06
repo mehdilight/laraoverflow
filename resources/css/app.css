@@ -8,6 +8,11 @@
 
 @layer base {
     [x-cloak] { display: none !important; }
+    @media screen(md) {
+        [x-cloak][md-x-cloak-none] {
+            display: block !important;
+        }
+    }
     body {
         font-family: "Inter", sans-serif;
     }
