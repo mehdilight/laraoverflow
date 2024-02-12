@@ -13,12 +13,14 @@
   $downvoteRoute = $model instanceof Question ? route('questions.downvote.store', [$model, $model->slug ]) : route('questions.answers.downvote.store', [$question, $model]);
   $storeCommentsRoute = $model instanceof Question ? route('questions.comments.store', [$model]) : route('questions.answers.comments.store', [$question, $model]);
   $bookmarkRoute = $model instanceof Question ? route('questions.bookmark.store', [$model, $model->slug]) : route('questions.answers.bookmark.store', [$question, $model]);
+  $canVote = \Illuminate\Support\Facades\Auth::user()->id !== $model->user_id;
 @endphp
 
 <div class="flex space-x-4">
   <div class="flex flex-col items-center space-y-4">
     <div class="space-y-2">
       <!-- upvote -->
+      @if ($canVote)
       <form
         action="{{ $upvoteRoute }}"
         method="post"
@@ -34,10 +36,12 @@
           </svg>
         </button>
       </form>
+      @endif
       <div class="text-gray-500 text-center text-xl">
         {{ $model->votes_score }}
       </div>
       <!-- downvote -->
+      @if ($canVote)
       <form action="{{ $downvoteRoute }}" method="post">
         @csrf
         <button
@@ -49,6 +53,7 @@
           </svg>
         </button>
       </form>
+      @endif
     </div>
     <!-- bookmark -->
     <form
