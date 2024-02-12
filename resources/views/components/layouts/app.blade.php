@@ -47,6 +47,7 @@
     {{ $slot }}
   </div>
 </div>
+<x-layouts.toasts />
 @vite(['resources/js/app.js'])
 
 @stack('scripts')

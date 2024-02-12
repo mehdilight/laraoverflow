@@ -24,7 +24,8 @@ class BookmarkAnswersController extends Controller
         );
 
         return redirect()
-            ->back();
+            ->back()
+            ->with('success', 'successfully bookmarked');
     }
 
     public function destroy(Question $question, Answer $answer)
@@ -37,6 +38,7 @@ class BookmarkAnswersController extends Controller
             ->delete();
 
         return redirect()
-            ->back();
+            ->back()
+            ->with('success', 'removed successfully from your bookmark list');
     }
 }

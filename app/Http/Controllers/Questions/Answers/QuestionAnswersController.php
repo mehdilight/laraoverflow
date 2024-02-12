@@ -15,6 +15,10 @@ class QuestionAnswersController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
+        $request->validate([
+            'answer_body' => ['required']
+        ]);
+
         $question->answers()->create(
             [
                 'body'    => $request->get('answer_body'),
@@ -23,6 +27,7 @@ class QuestionAnswersController extends Controller
         );
 
         return redirect()
-            ->back();
+            ->back()
+            ->with('success', 'your answer is successfully submit');
     }
 }

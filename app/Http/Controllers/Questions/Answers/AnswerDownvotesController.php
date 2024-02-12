@@ -23,6 +23,7 @@ class AnswerDownvotesController extends Controller
         $this->votingService->downvote($answer, $user);
 
         return redirect()
-            ->back();
+            ->back()
+            ->with('success', 'answer successfully downvote');
     }
 }

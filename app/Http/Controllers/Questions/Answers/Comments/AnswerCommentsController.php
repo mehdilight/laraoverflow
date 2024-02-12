@@ -40,6 +40,7 @@ class AnswerCommentsController extends Controller
         }
 
         return redirect()
-            ->back();
+            ->back()
+            ->with('success', 'your comment was submitted');
     }
 }

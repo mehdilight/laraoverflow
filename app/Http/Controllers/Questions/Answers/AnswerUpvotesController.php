@@ -23,6 +23,7 @@ class AnswerUpvotesController extends Controller
         $this->votingService->upvote($answer, $user);
 
         return redirect()
-            ->back();
+            ->back()
+            ->with('success', 'answer successfully upvote');
     }
 }

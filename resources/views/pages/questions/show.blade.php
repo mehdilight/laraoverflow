@@ -39,7 +39,7 @@
   </header>
 
   <main class="text-sm py-4">
-    <x-blocks.questions.post-viewer :model="$question" :user="$user" />
+    <x-blocks.questions.post-viewer :model="$question" :user="$user"/>
 
     @if($answers->isNotEmpty())
       <div>
@@ -61,7 +61,7 @@
         </header>
         <div class="grid gap-4">
           @foreach($answers as $answer)
-            <x-blocks.questions.post-viewer :model="$answer" :question="$question" :user="$user" />
+            <x-blocks.questions.post-viewer :model="$answer" :question="$question" :user="$user"/>
           @endforeach
         </div>
         <div class="p-4">
@@ -80,7 +80,12 @@
           Your Answer
         </label>
         <x-trix-field value="{!! old('answer_body') !!}" id="answer_body" name="answer_body"
-                      class="input bg-white mb-2"/>
+                      class="input bg-white mb-2 {{ $errors->first('answer_body') ? 'input-has-error' : ''  }}"/>
+        @error('answer_body')
+          <p class="text-red-500 text-xs my-2">
+            {{ $message }}
+          </p>
+        @enderror
         <button type="submit" class="btn btn-primary">
           Post your answer
         </button>
