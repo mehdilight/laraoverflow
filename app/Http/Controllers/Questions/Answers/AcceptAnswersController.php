@@ -35,8 +35,10 @@ class AcceptAnswersController extends Controller
         }
 
         $answer->markAsAccepted();
-        $this->reputationActions->increase($answer->user, 15);
-        $this->reputationActions->increase($user, 2);
+        if ($question->user_id !== $answer->user_id) {
+            $this->reputationActions->increase($answer->user, 15);
+            $this->reputationActions->increase($user, 2);
+        }
 
         return redirect()
             ->back()
