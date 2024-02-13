@@ -110,7 +110,7 @@
     <!-- accepted answer -->
     @if ($model instanceof \App\Models\Answer && !$question->acceptedAnswer && $user?->id === $question->user_id)
       <form
-        action='{{ route('questions.answers.accept.store', [$model, $question]) }}'
+        action='{{ route('questions.answers.accept.store', [$question, $model->id ]) }}'
         method="post"
       >
         @csrf
