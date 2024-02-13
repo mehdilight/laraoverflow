@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Questions\Answers;
 
+use App\Actions\Reputation\ReputationActions;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Question;
@@ -10,6 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AcceptAnswersController extends Controller
 {
+    public function __construct(private ReputationActions $reputationActions)
+    {
+    }
+
     public function store(Question $question, string $answerId)
     {
         $user = Auth::user();
@@ -30,6 +35,8 @@ class AcceptAnswersController extends Controller
         }
 
         $answer->markAsAccepted();
+        $this->reputationActions->increase($answer->user, 15);
+        $this->reputationActions->increase($user, 2);
 
         return redirect()
             ->back()
