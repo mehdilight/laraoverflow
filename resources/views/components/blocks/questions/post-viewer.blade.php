@@ -13,7 +13,7 @@
   $downvoteRoute = $model instanceof Question ? route('questions.downvote.store', [$model, $model->slug ]) : route('questions.answers.downvote.store', [$question, $model]);
   $storeCommentsRoute = $model instanceof Question ? route('questions.comments.store', [$model]) : route('questions.answers.comments.store', [$question, $model]);
   $bookmarkRoute = $model instanceof Question ? route('questions.bookmark.store', [$model, $model->slug]) : route('questions.answers.bookmark.store', [$question, $model]);
-  $canVote = \Illuminate\Support\Facades\Auth::user()->id !== $model->user_id;
+  $canVote = \Illuminate\Support\Facades\Auth::user()?->id !== $model->user_id;
 @endphp
 
 <div class="flex space-x-4">
