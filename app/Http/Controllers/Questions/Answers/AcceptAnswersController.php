@@ -20,8 +20,8 @@ class AcceptAnswersController extends Controller
         $user = Auth::user();
         abort_unless($question->user_id === $user->id, Response::HTTP_UNAUTHORIZED);
 
-        $existingAcceptedAsnwer = $question->answers()->where('accepted', true)->first();
-        if ($existingAcceptedAsnwer instanceof Answer) {
+        $existingAcceptedAnswer = $question->answers()->where('accepted', true)->first();
+        if ($existingAcceptedAnswer instanceof Answer) {
             return redirect()
                 ->back()
                 ->withErrors("there is already an accepted answer");
