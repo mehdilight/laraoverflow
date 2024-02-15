@@ -14,6 +14,9 @@ LaraOverflow is Question and Answers platform. built with laravel and livewire.
 ![Tags Page](/screenshots/Screenshot%202024-02-14%20at%2017.45.07.png)
 ![Profile Page](/screenshots/Screenshot%202024-02-14%20at%2017.45.26.png)
 
+## Project Status
+the project is still under development
+
 ## License
 
 The project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
