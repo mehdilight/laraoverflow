@@ -32,6 +32,7 @@ class ActivityShow extends Component
                     $query->where('user_id', $this->user->id);
                 }
             ])
+            ->orderByDesc('questions_count')
             ->paginate();
 
         $view = view('livewire.pages.users.activity-show', [
